@@ -1,0 +1,44 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: klass = "" } = Astro.props;
+---
+
+<svg
+  class={klass}
+  viewBox="0 0 1200 90"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+>
+  <path
+    d="M0 45 Q60 20 110 45 T220 45 Q250 15 290 30 T380 20 Q410 55 460 45 T560 50
+       Q600 70 650 45 T740 40 Q780 10 830 35 T930 45 Q970 25 1010 45 T1120 40 T1200 45"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  ></path>
+  <path
+    d="M110 45 Q120 30 135 34" stroke="currentColor" stroke-width="1.6" opacity="0.6"
+  ></path>
+  <path
+    d="M290 30 Q300 14 316 16" stroke="currentColor" stroke-width="1.6" opacity="0.6"
+  ></path>
+  <path
+    d="M460 45 Q472 62 490 60" stroke="currentColor" stroke-width="1.6" opacity="0.6"
+  ></path>
+  <path
+    d="M650 45 Q660 28 678 30" stroke="currentColor" stroke-width="1.6" opacity="0.6"
+  ></path>
+  <path
+    d="M830 35 Q842 18 860 20" stroke="currentColor" stroke-width="1.6" opacity="0.6"
+  ></path>
+  <path
+    d="M1010 45 Q1020 62 1038 60" stroke="currentColor" stroke-width="1.6" opacity="0.6"
+  ></path>
+  <circle cx="220" cy="45" r="3" fill="currentColor"></circle>
+  <circle cx="560" cy="50" r="3" fill="currentColor"></circle>
+  <circle cx="930" cy="45" r="3" fill="currentColor"></circle>
+</svg>

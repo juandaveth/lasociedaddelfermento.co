@@ -1,0 +1,35 @@
+---
+const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
+---
+
+<section id="blog" class="blog">
+  <div class="wrap blog-inner">
+    <span class="badge">Próximamente</span>
+    <h2>El blog de<br />la fermentación</h2>
+    <p>
+      Muy pronto: guías, recetas y notas sobre cómo fermentar en
+      Medellín — desde tu primera kombucha hasta los procesos que
+      exploramos en el Parche. Síguenos en Instagram para no perderte el
+      lanzamiento.
+    </p>
+    <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn--outline"
+      >Avísenme cuando salga</a
+    >
+  </div>
+</section>
+
+<style>
+  .blog-inner {
+    text-align: center;
+    max-width: 46ch;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .blog h2 {
+    margin: 0;
+  }
+</style>

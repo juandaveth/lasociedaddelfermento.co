@@ -1,0 +1,93 @@
+---
+import BottleRow from "./illustrations/BottleRow.astro";
+import RootDivider from "./illustrations/RootDivider.astro";
+
+const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
+---
+
+<section id="top" class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Medellín · Encuentro quincenal</p>
+      <h1>
+        La Sociedad<br />
+        del Fermento
+      </h1>
+      <p class="hero-sub">
+        Un espacio para fermentar en comunidad: chucrut, kombucha, curiosidad
+        y buenas preguntas. Cada 15 días nos reunimos en <strong
+          >El Parche Fermentero</strong
+        >.
+      </p>
+      <div class="hero-actions">
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn"
+          >Escríbenos por Instagram</a
+        >
+        <a href="#parche" class="btn btn--outline">Ver el Parche</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <BottleRow class="jar" />
+    </div>
+  </div>
+  <RootDivider class="divider" />
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(2.5rem, 6vw, 4.5rem);
+    padding-bottom: 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 5.2rem);
+    margin: 0.6rem 0 1.4rem;
+  }
+
+  .hero-sub {
+    max-width: 42ch;
+    font-size: 1.15rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+  }
+
+  .hero-art {
+    display: flex;
+    justify-content: center;
+    color: var(--color-ink);
+  }
+
+  .hero-art .jar {
+    width: min(360px, 80vw);
+  }
+
+  .divider {
+    width: 100%;
+    height: 60px;
+    color: var(--color-ink);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  @media (max-width: 800px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+
+    .hero-art {
+      order: -1;
+    }
+  }
+</style>
