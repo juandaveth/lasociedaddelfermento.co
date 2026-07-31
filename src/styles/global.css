@@ -1,19 +1,106 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600&display=swap");
 
+/* ==========================================================================
+   LSDF — sistema de diseño
+   --------------------------------------------------------------------------
+   Dos capas de color:
+     1. Paleta cruda (--lsdf-*): los pigmentos. No se usan directo en componentes.
+     2. Roles semánticos (--color-*): lo que sí se usa. Se invierten por superficie.
+   Una sección oscura solo necesita data-surface="ink". Nada de re-pintar botones
+   a mano en cada componente.
+   ========================================================================== */
+
 :root {
-  --color-bg: #f5eedc;
-  --color-bg-alt: #ede2c6;
-  --color-ink: #1a1610;
-  --color-mustard: #e6ab1e;
-  --color-terracotta: #a83d1f;
+  /* ---------- 1. Paleta cruda ---------- */
+  --lsdf-crema: #f5eedc;
+  --lsdf-crema-honda: #ede2c6;
+  --lsdf-tinta: #1a1610;
+  --lsdf-tinta-honda: #241f17;
+  --lsdf-mostaza: #e6ab1e;
+  --lsdf-terracota: #a83d1f;
+
+  /* ---------- 2. Roles semánticos (superficie clara) ---------- */
+  --color-bg: var(--lsdf-crema);
+  --color-bg-alt: var(--lsdf-crema-honda);
+  --color-ink: var(--lsdf-tinta);
+  /* Acento gráfico: sombras duras, bordes de énfasis, fondo de badge. */
+  --color-accent: var(--lsdf-mostaza);
+  /* Acento tipográfico: eyebrows, dt, links de pie. Legible sobre el fondo. */
+  --color-accent-ink: var(--lsdf-terracota);
   --color-line: rgba(26, 22, 16, 0.15);
 
+  /* ---------- Tipografía ---------- */
   --font-display: "Anton", sans-serif;
   --font-body: "Fraunces", Georgia, serif;
   --font-label: "Work Sans", system-ui, sans-serif;
 
+  --text-xs: 0.72rem;
+  --text-sm: 0.78rem;
+  --text-md: 0.85rem;
+  --text-base: 1.05rem;
+  --text-lg: 1.15rem;
+  --text-h3: clamp(1.3rem, 3vw, 1.8rem);
+  --text-h2: clamp(2rem, 5vw, 3.4rem);
+  --text-h1: clamp(2.6rem, 7vw, 5.2rem);
+
+  --track-label: 0.08em;
+  --track-badge: 0.1em;
+  --track-eyebrow: 0.14em;
+
+  --leading-tight: 1.02;
+  --leading-body: 1.6;
+
+  /* ---------- Espaciado ---------- */
+  --space-2xs: 0.3rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.9rem;
+  --space-md: 1.2rem;
+  --space-lg: 1.6rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 3.5rem;
+  --space-section: clamp(3rem, 8vw, 6rem);
+  --space-gap-alto: clamp(2.5rem, 6vw, 4rem);
+
+  /* ---------- Forma ---------- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+  --border-fuerte: 2px;
+  --border-marco: 3px;
+
+  /* La sombra dura es la firma de la marca. Sin blur, nunca. */
+  --shadow-dura: 10px 10px 0 0 var(--color-accent);
+  --shadow-dura-sm: 6px 6px 0 0 var(--color-accent);
+
+  /* ---------- Movimiento ---------- */
+  --dur: 0.15s;
+  --ease: ease;
+
+  /* ---------- Retícula ---------- */
   --max-width: 1120px;
+  --medida: 62ch;
+  --medida-corta: 46ch;
 }
+
+/* ---------- Inversión de superficie ----------
+   Cualquier bloque con data-surface="ink" reasigna los roles. Botones,
+   eyebrows, bordes y líneas se adaptan solos porque todos leen roles,
+   no pigmentos. */
+[data-surface="ink"] {
+  --color-bg: var(--lsdf-tinta);
+  --color-bg-alt: var(--lsdf-tinta-honda);
+  --color-ink: var(--lsdf-crema);
+  /* Terracota sobre tinta no pasa contraste: en oscuro el rol lo toma mostaza. */
+  --color-accent-ink: var(--lsdf-mostaza);
+  --color-line: rgba(245, 238, 220, 0.22);
+
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
 
 * {
   box-sizing: border-box;
@@ -28,8 +115,8 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -43,19 +130,44 @@ a {
   color: inherit;
 }
 
+/* Foco visible en todo lo enfocable. Antes no existía. */
+:focus-visible {
+  outline: var(--border-fuerte) solid var(--color-accent-ink);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Retícula
+   ========================================================================== */
+
 .wrap {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--space-lg);
 }
 
-.eyebrow {
-  font-family: var(--font-label);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.78rem;
-  font-weight: 600;
+section {
+  padding: var(--space-section) 0;
+  scroll-margin-top: 80px;
 }
+
+/* ==========================================================================
+   Tipografía
+   ========================================================================== */
 
 h1,
 h2,
@@ -63,38 +175,109 @@ h3 {
   font-family: var(--font-display);
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  line-height: 1.02;
+  line-height: var(--leading-tight);
   margin: 0;
 }
 
+h1 {
+  font-size: var(--text-h1);
+}
+
 h2 {
-  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-size: var(--text-h2);
 }
 
 h3 {
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-size: var(--text-h3);
 }
 
 p {
   margin: 0 0 1rem;
 }
 
+.eyebrow {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--track-eyebrow);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-accent-ink);
+}
+
+/* Bajada de sección: el párrafo grande que sigue a un h1/h2. */
+.lead {
+  font-size: var(--text-lg);
+  max-width: var(--medida);
+}
+
+/* Metadato en versalitas: fechas, lugares, créditos. */
+.meta {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--track-label);
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--color-accent-ink);
+}
+
+/* ==========================================================================
+   Marca
+   ========================================================================== */
+
+.marca {
+  color: var(--color-ink);
+  height: 1.5rem;
+  width: auto;
+}
+
+/* Bloque LSDF + nombre completo, alineados por la base. */
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.lockup .marca {
+  /* El sello es circular: necesita más alto que el bloque para que el
+     anillo de burbujas siga leyéndose y no se vuelva textura. */
+  height: 2.7rem;
+  flex: none;
+}
+
+.lockup-nombre {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Componentes
+   ========================================================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   font-family: var(--font-label);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.85rem;
+  letter-spacing: var(--track-label);
+  font-size: var(--text-md);
   font-weight: 600;
   background: var(--color-ink);
   color: var(--color-bg);
-  padding: 0.9rem 1.6rem;
-  border-radius: 999px;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-pill);
   text-decoration: none;
-  border: 2px solid var(--color-ink);
-  transition: background 0.15s ease, color 0.15s ease;
+  border: var(--border-fuerte) solid var(--color-ink);
+  cursor: pointer;
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
 }
 
 .btn:hover {
@@ -112,20 +295,53 @@ p {
   color: var(--color-bg);
 }
 
-section {
-  padding: clamp(3rem, 8vw, 6rem) 0;
-  scroll-margin-top: 80px;
+.btn--sm {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.75rem;
 }
 
 .badge {
   display: inline-block;
   font-family: var(--font-label);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.72rem;
+  letter-spacing: var(--track-badge);
+  font-size: var(--text-xs);
   font-weight: 600;
-  background: var(--color-mustard);
+  background: var(--color-accent);
+  color: var(--lsdf-tinta);
+  padding: var(--space-2xs) 0.7rem;
+  border-radius: var(--radius-pill);
+}
+
+/* Marco de foto: borde grueso, sombra dura, giro leve. La firma visual. */
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: var(--border-marco) solid var(--color-ink);
+  box-shadow: var(--shadow-dura);
+  transform: rotate(1.5deg);
+}
+
+.photo-frame > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caja de énfasis dentro de una sección (evento, aviso, dato). */
+.caja {
+  padding: var(--space-lg);
+  border: var(--border-fuerte) solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  max-width: var(--medida);
+}
+
+.divider {
+  width: 100%;
+  height: 60px;
   color: var(--color-ink);
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
+  margin-top: var(--space-gap-alto);
 }

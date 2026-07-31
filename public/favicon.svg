@@ -1,14 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill-rule="evenodd">
+    <title>La Sociedad del Fermento</title>
     <circle cx="32" cy="32" r="32" fill="#e6ab1e" />
-    <text
-        x="32"
-        y="34"
-        text-anchor="middle"
-        dominant-baseline="central"
-        font-family="Arial, Helvetica, sans-serif"
-        font-weight="800"
-        font-size="25"
-        letter-spacing="-1"
-        fill="#1a1610"
-    >LSF</text>
+    <g fill="#1a1610" transform="translate(18.12 11) scale(0.7119)">
+        <!-- L -->
+        <path d="M0 0 H6 V22 H17 V28 H0 Z" />
+        <!-- S -->
+        <path d="M18 0 H0 V17 H12 V22 H0 V28 H18 V11 H6 V6 H18 Z" transform="translate(21 0)" />
+        <!-- D -->
+        <path
+            d="M0 0 H11 C15.5 0 18 3 18 8 V20 C18 25 15.5 28 11 28 H0 Z M6 6 V22 H10 C11.5 22 12 20.5 12 18.5 V9.5 C12 7.5 11.5 6 10 6 Z"
+            transform="translate(0 31)"
+        />
+        <!-- F -->
+        <path d="M0 0 H18 V6 H6 V11 H15.5 V17 H6 V28 H0 Z" transform="translate(21 31)" />
+    </g>
 </svg>

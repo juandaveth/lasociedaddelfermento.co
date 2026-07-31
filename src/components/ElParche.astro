@@ -30,7 +30,7 @@ const detalles = [
         {
           detalles.map((d) => (
             <div class="detalle">
-              <dt>{d.label}</dt>
+              <dt class="meta">{d.label}</dt>
               <dd>{d.valor}</dd>
             </div>
           ))
@@ -51,11 +51,11 @@ const detalles = [
   .parche-grid {
     display: grid;
     grid-template-columns: 0.9fr 1.4fr;
-    gap: 3rem;
+    gap: var(--space-2xl);
   }
 
   .detalles {
-    margin: 1.8rem 0;
+    margin: var(--space-lg) 0;
     display: grid;
     gap: 1rem;
   }
@@ -64,17 +64,12 @@ const detalles = [
     display: grid;
     grid-template-columns: 9rem 1fr;
     gap: 1rem;
-    padding: 0.9rem 0;
+    padding: var(--space-sm) 0;
     border-top: 1px solid var(--color-line);
   }
 
   .detalle dt {
-    font-family: var(--font-label);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
     font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-terracotta);
   }
 
   .detalle dd {
@@ -84,12 +79,12 @@ const detalles = [
   @media (max-width: 800px) {
     .parche-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: var(--space-md);
     }
 
     .detalle {
       grid-template-columns: 1fr;
-      gap: 0.3rem;
+      gap: var(--space-2xs);
     }
   }
 </style>

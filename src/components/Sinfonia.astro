@@ -5,9 +5,9 @@ const EVENTO_URL = "https://www.instagram.com/p/DbI_v1nOiUD/";
 const FUENTE_URL = "https://www.instagram.com/exploratoriomde/";
 ---
 
-<section id="sinfonia" class="sinfonia">
+<section id="sinfonia" data-surface="ink">
   <div class="wrap">
-    <p class="eyebrow eyebrow--light">Un proyecto de Santiago Franco Lopera</p>
+    <p class="eyebrow">Un proyecto de Santiago Franco Lopera</p>
     <h2>Sinfonía de<br />Todos los Tiempos</h2>
 
     <p class="lead">
@@ -19,10 +19,10 @@ const FUENTE_URL = "https://www.instagram.com/exploratoriomde/";
       autoría y cognición centradas exclusivamente en lo humano.
     </p>
 
-    <div class="evento">
+    <div class="caja evento">
       <span class="badge">Próximo encuentro</span>
       <h3>Hálito. Escucha colectiva de una respiración fermentada</h3>
-      <p class="evento-datos">Viernes 31 de julio, 2026 · 4:00 p.m. · Exploratorio</p>
+      <p class="meta">Viernes 31 de julio, 2026 · 4:00 p.m. · Exploratorio</p>
       <p>
         La actividad de cierre de la residencia: un espacio para compartir
         el camino del proyecto, conocer los fanzines construidos, degustar
@@ -45,34 +45,18 @@ const FUENTE_URL = "https://www.instagram.com/exploratoriomde/";
 </section>
 
 <style>
-  .sinfonia {
-    background: var(--color-ink);
-    color: var(--color-bg);
-  }
-
-  .eyebrow--light {
-    color: var(--color-mustard);
-  }
-
-  .sinfonia h2 {
-    margin: 0.6rem 0 1.6rem;
-  }
-
-  .lead {
-    max-width: 62ch;
-    font-size: 1.15rem;
+  h2 {
+    margin: var(--space-2xs) 0 var(--space-lg);
   }
 
   .evento {
-    margin-top: 2.5rem;
-    padding: 1.8rem;
-    border: 2px solid var(--color-mustard);
-    border-radius: 4px;
-    max-width: 62ch;
+    margin-top: var(--space-xl);
   }
 
+  /* Título de evento: el único caso donde el h3 abandona Anton, porque es
+     el nombre de una obra, no un rótulo de sección. */
   .evento h3 {
-    margin-top: 0.8rem;
+    margin-top: var(--space-xs);
     text-transform: none;
     font-family: var(--font-body);
     font-weight: 600;
@@ -80,40 +64,18 @@ const FUENTE_URL = "https://www.instagram.com/exploratoriomde/";
     font-size: clamp(1.2rem, 3vw, 1.6rem);
   }
 
-  .evento-datos {
-    font-family: var(--font-label);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.85rem;
-    color: var(--color-mustard);
-    font-weight: 600;
-  }
-
-  .evento .btn--outline {
-    color: var(--color-bg);
-    border-color: var(--color-bg);
-    margin-top: 0.6rem;
-  }
-
-  .evento .btn--outline:hover {
-    background: var(--color-bg);
-    color: var(--color-ink);
+  .evento .btn {
+    margin-top: var(--space-2xs);
   }
 
   .fuente {
-    margin-top: 1.5rem;
+    margin-top: var(--space-md);
     font-family: var(--font-label);
     font-size: 0.8rem;
     opacity: 0.7;
   }
 
   .fuente a {
-    color: var(--color-mustard);
-  }
-
-  .divider {
-    width: 100%;
-    height: 60px;
-    margin-top: clamp(2.5rem, 6vw, 4rem);
+    color: var(--color-accent-ink);
   }
 </style>

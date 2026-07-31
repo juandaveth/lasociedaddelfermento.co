@@ -1,11 +1,16 @@
 ---
+import Marca from "./illustrations/Marca.astro";
+
 const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <p class="wordmark">La Sociedad<br />del Fermento</p>
+    <div class="lockup">
+      <Marca variante="bloque" class="marca" />
+      <p class="lockup-nombre">La Sociedad<br />del Fermento</p>
+    </div>
     <div class="footer-meta">
       <a href={INSTAGRAM_URL} target="_blank" rel="noopener">@lasociedaddelfermento</a>
       <span>Medellín, Colombia</span>
@@ -17,7 +22,7 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     border-top: 1px solid var(--color-line);
-    padding: 2.5rem 0;
+    padding: var(--space-xl) 0;
   }
 
   .footer-inner {
@@ -25,21 +30,13 @@ const year = new Date().getFullYear();
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
-    gap: 1.5rem;
-  }
-
-  .wordmark {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    line-height: 1;
-    margin: 0;
-    font-size: 1rem;
+    gap: var(--space-md);
   }
 
   .footer-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.2rem;
+    gap: var(--space-md);
     font-family: var(--font-label);
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -49,7 +46,7 @@ const year = new Date().getFullYear();
 
   .footer-meta a {
     text-decoration: none;
-    color: var(--color-terracotta);
+    color: var(--color-accent-ink);
     font-weight: 600;
   }
 </style>

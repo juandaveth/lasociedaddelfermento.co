@@ -1,0 +1,34 @@
+---
+/**
+ * Marca LSDF.
+ *
+ * La geometría vive en src/lib/marca.mjs, compartida con el script de
+ * exportación a PNG. Este componente solo la envuelve en un <svg> con
+ * el título accesible y la clase que le pasen.
+ */
+import { contenido, VIEW_BOX } from "../../lib/marca.mjs";
+
+interface Props {
+  variante?: "fila" | "bloque" | "sello" | "frasco";
+  class?: string;
+  titulo?: string | null;
+}
+
+const { variante = "fila", class: klass = "", titulo = null } = Astro.props;
+
+const viewBox = VIEW_BOX[variante];
+const aria = titulo ? {} : { "aria-hidden": "true" as const };
+---
+
+<svg
+  class={klass}
+  viewBox={viewBox}
+  fill="currentColor"
+  fill-rule="evenodd"
+  xmlns="http://www.w3.org/2000/svg"
+  role={titulo ? "img" : undefined}
+  {...aria}
+>
+  {titulo && <title>{titulo}</title>}
+  <Fragment set:html={contenido(variante)} />
+</svg>
