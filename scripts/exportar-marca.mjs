@@ -5,9 +5,10 @@
  *   node scripts/exportar-marca.mjs frasco bloque    → esas variantes
  *   node scripts/exportar-marca.mjs sello --crema    → versión clara
  *
- * Los archivos salen en marca/. La geometría viene de src/lib/marca.mjs,
- * la misma que usa el sitio, así que un PNG exportado nunca se desfasa
- * del logo real.
+ * Los archivos salen en public/marca/, así que quedan descargables en
+ * lasociedaddelfermento.co/marca/<archivo> apenas se despliegue. La
+ * geometría viene de src/lib/marca.mjs, la misma que usa el sitio, así
+ * que un PNG exportado nunca se desfasa del logo real.
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
@@ -16,7 +17,7 @@ import sharp from "sharp";
 import { svgMarca, VARIANTES } from "../src/lib/marca.mjs";
 
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const destino = join(raiz, "marca");
+const destino = join(raiz, "public", "marca");
 
 const TINTAS = {
   negro: { hex: "#1a1610", sufijo: "negro" },
