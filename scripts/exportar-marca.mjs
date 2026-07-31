@@ -1,9 +1,12 @@
 /**
  * Exporta la marca LSDF a PNG con fondo transparente.
  *
- *   node scripts/exportar-marca.mjs                  → sello, negro
- *   node scripts/exportar-marca.mjs frasco bloque    → esas variantes
- *   node scripts/exportar-marca.mjs sello --crema    → versión clara
+ *   node scripts/exportar-marca.mjs                       → sello, negro
+ *   node scripts/exportar-marca.mjs frasco bloque         → esas variantes
+ *   node scripts/exportar-marca.mjs sello --crema         → versión clara
+ *   node scripts/exportar-marca.mjs avatar --fondo=mostaza
+ *       → con el fondo pintado a sangre, listo para subir a Instagram,
+ *         que no admite transparencia
  *
  * Los archivos salen en public/marca/, así que quedan descargables en
  * lasociedaddelfermento.co/marca/<archivo> apenas se despliegue. La
@@ -24,6 +27,13 @@ const TINTAS = {
   crema: { hex: "#f5eedc", sufijo: "crema" },
 };
 
+// Nombres de la paleta, para no tener que teclear el hex.
+const FONDOS = {
+  mostaza: "#e6ab1e",
+  crema: "#f5eedc",
+  tinta: "#1a1610",
+};
+
 // Tamaños útiles: avatar de Instagram, favicon grande, e impresión.
 const ANCHOS = [2048, 512, 128];
 
@@ -31,6 +41,19 @@ const args = process.argv.slice(2);
 const tinta = args.includes("--crema") ? TINTAS.crema : TINTAS.negro;
 const pedidas = args.filter((a) => !a.startsWith("--"));
 const variantes = pedidas.length ? pedidas : ["sello"];
+
+const argFondo = args.find((a) => a.startsWith("--fondo="));
+const valorFondo = argFondo?.slice("--fondo=".length);
+const fondo = valorFondo ? (FONDOS[valorFondo] ?? valorFondo) : undefined;
+if (valorFondo && !FONDOS[valorFondo] && !/^#[0-9a-f]{3,8}$/i.test(valorFondo)) {
+  console.error(
+    `Fondo inválido: "${valorFondo}". Usa ${Object.keys(FONDOS).join(", ")} o un hex.`
+  );
+  process.exit(1);
+}
+const sufijoFondo = fondo
+  ? `-sobre-${FONDOS[valorFondo] ? valorFondo : valorFondo.replace("#", "")}`
+  : "";
 
 const desconocida = variantes.find((v) => !VARIANTES.includes(v));
 if (desconocida) {
@@ -42,18 +65,20 @@ if (desconocida) {
 
 await mkdir(destino, { recursive: true });
 
+const base = (v) => `lsdf-${v}-${tinta.sufijo}${sufijoFondo}`;
+
 for (const variante of variantes) {
   // El SVG vectorial también, por si lo necesita en Illustrator o Figma.
-  const svg = svgMarca(variante, { color: tinta.hex });
-  const nombreSvg = `lsdf-${variante}-${tinta.sufijo}.svg`;
+  const svg = svgMarca(variante, { color: tinta.hex, fondo });
+  const nombreSvg = `${base(variante)}.svg`;
   await writeFile(join(destino, nombreSvg), svg + "\n", "utf8");
   console.log(`  marca/${nombreSvg}`);
 
   for (const ancho of ANCHOS) {
     // Se rasteriza desde un SVG ya dimensionado, no con .resize(), para
     // que los trazos finos salgan nítidos y no interpolados.
-    const grande = svgMarca(variante, { color: tinta.hex, ancho });
-    const nombre = `lsdf-${variante}-${tinta.sufijo}-${ancho}.png`;
+    const grande = svgMarca(variante, { color: tinta.hex, ancho, fondo });
+    const nombre = `${base(variante)}-${ancho}.png`;
     await sharp(Buffer.from(grande)).png({ compressionLevel: 9 }).toFile(
       join(destino, nombre)
     );

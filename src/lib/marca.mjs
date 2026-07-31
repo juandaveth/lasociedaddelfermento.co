@@ -78,12 +78,13 @@ export const BURBUJAS_FRASCO = [
   { cx: 45, cy: 48, r: 2.3 },
 ];
 
-export const VARIANTES = ["sello", "bloque", "fila", "frasco"];
+export const VARIANTES = ["sello", "avatar", "bloque", "fila", "frasco"];
 
 export const VIEW_BOX = {
   fila: "0 0 81 28",
   bloque: "0 0 39 59",
   sello: "0 0 120 120",
+  avatar: "0 0 120 120",
   frasco: "0 0 90 130",
 };
 
@@ -101,6 +102,13 @@ export function contenido(variante) {
     case "sello":
       return [
         '<circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.5"/>',
+        contenido("avatar"),
+      ].join("");
+
+    // El sello sin el aro. Para el avatar de Instagram, donde el círculo
+    // de fondo ya hace de borde y el aro solo duplicaría esa línea.
+    case "avatar":
+      return [
         BURBUJAS_SELLO.map(
           (b) => `<circle cx="${b.cx}" cy="${b.cy}" r="${b.r}"/>`
         ).join(""),
@@ -126,9 +134,12 @@ export function contenido(variante) {
 
 /**
  * SVG completo y autónomo, para exportar a PNG u otro formato.
- * Sin fondo: el PNG resultante queda con transparencia.
+ *
+ * Sin `fondo` el PNG queda con transparencia. Con `fondo` se pinta un
+ * rectángulo a sangre: es lo que necesita una foto de perfil de
+ * Instagram, que no admite transparencia y recorta en círculo.
  */
-export function svgMarca(variante, { color = "#1a1610", ancho } = {}) {
+export function svgMarca(variante, { color = "#1a1610", ancho, fondo } = {}) {
   const vb = VIEW_BOX[variante];
   if (!vb) throw new Error(`Variante de marca desconocida: ${variante}`);
 
@@ -140,6 +151,7 @@ export function svgMarca(variante, { color = "#1a1610", ancho } = {}) {
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}"`,
     ` width="${anchoFinal}" height="${altoFinal}"`,
     ` fill="${color}" fill-rule="evenodd" color="${color}">`,
+    fondo ? `<rect x="0" y="0" width="${w}" height="${h}" fill="${fondo}"/>` : "",
     contenido(variante),
     "</svg>",
   ].join("");
