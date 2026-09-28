@@ -2,6 +2,7 @@
 import Marca from "./illustrations/Marca.astro";
 
 const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
+const APP_URL = "https://app.lasociedaddelfermento.co";
 ---
 
 <header class="site-header">
@@ -12,11 +13,13 @@ const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
     </a>
     <nav>
       <a href="#parche">El Parche</a>
+      <a href="#manifiesto">Manifiesto</a>
       <a href="#sinfonia">Sinfonía</a>
       <a href="#blog">Blog</a>
       <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn--outline btn--sm"
         >Instagram</a
       >
+      <a href={APP_URL} class="btn btn--sm">App</a>
     </nav>
   </div>
 </header>

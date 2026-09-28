@@ -1,0 +1,111 @@
+---
+const estrofas = [
+  ["Lo vivo es todo aquello que tiene la sensibilidad de ser afectado."],
+  [
+    "Una colonia de microorganismos es una organización inteligente: siente, decide, y se adapta.",
+  ],
+  [
+    "Las ideas juntas fermentan mejor que existiendo separadas.",
+    "Fermentamos en grupo reconociendo la sinergia como potencia.",
+  ],
+  [
+    "Un cuerpo que transforma es un cuerpo que hace tecnología.",
+    "El alimento es tecnología.",
+    "Un fermento es una tecnología contenida en un frasco.",
+  ],
+  [
+    "Fermentar es cocinar con el tiempo.",
+    "Rechazar lo inmediato es dejar que una sustancia evolucione.",
+  ],
+  [
+    "Cuidar es un gesto simbiótico. Observar, airear, alimentar: así se da la conversación.",
+  ],
+  [
+    "Experimentamos sin miedo al error.",
+    "Limpiaremos los regueros causados por estallidos efervescentes que sean necesarios.",
+  ],
+  [
+    "Creemos en el bienestar como código abierto: ningún saber sobre el fermento se vende, se esconde ni se monopoliza.",
+  ],
+];
+---
+
+<section id="manifiesto" class="manifiesto">
+  <div class="wrap">
+    <header class="manifiesto-head">
+      <p class="eyebrow">Manifiesto fermentero</p>
+      <h2>El tiempo de<br />todos los tiempos</h2>
+    </header>
+
+    <div class="manifiesto-cuerpo">
+      {
+        estrofas.map((estrofa) => (
+          <p>
+            {estrofa.map((linea, i) => (
+              <>
+                {i > 0 && <br />}
+                {linea}
+              </>
+            ))}
+          </p>
+        ))
+      }
+    </div>
+
+    <p class="firma" aria-label="La Sociedad del Fermento">LSDF</p>
+  </div>
+</section>
+
+<style>
+  .manifiesto {
+    background: var(--color-bg);
+  }
+
+  .manifiesto-head {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .manifiesto-cuerpo {
+    max-width: 54ch;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .manifiesto-cuerpo p {
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    text-wrap: pretty;
+  }
+
+  /* La primera declaración sostiene todo el resto: se lee distinto. */
+  .manifiesto-cuerpo p:first-child {
+    font-size: var(--text-h3);
+    font-style: italic;
+    line-height: 1.35;
+  }
+
+  .firma {
+    margin-top: var(--space-2xl);
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    letter-spacing: 0.12em;
+  }
+
+  .firma::after {
+    content: "· · ·";
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--text-xs);
+    letter-spacing: 0.35em;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 800px) {
+    .manifiesto-head {
+      margin-bottom: var(--space-xl);
+    }
+  }
+</style>
