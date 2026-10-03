@@ -12,6 +12,23 @@ const pigmentos = [
   { nombre: "--lsdf-terracota", hex: "#a83d1f", rol: "Acento tipográfico: eyebrow, dt, link" },
 ];
 
+// CMYK convertido desde sRGB con los perfiles CoatedFOGRA39 y UncoatedFOGRA29,
+// intención colorimétrica relativa. Punto de partida, no verdad: la imprenta
+// manda con su prueba de color.
+const tintasImpresion = [
+  { color: "Mostaza", hex: "#e6ab1e", estucado: "9 · 35 · 98 · 1", bond: "10 · 29 · 100 · 0", pantone: "≈ 124 C", uso: "Fondo de sticker, segunda tinta del fanzine." },
+  { color: "Terracota", hex: "#a83d1f", estucado: "24 · 88 · 100 · 18", bond: "22 · 98 · 100 · 24", pantone: "≈ 1675 C", uso: "Titulares y detalles sobre crema. Nunca sobre tinta." },
+  { color: "Tinta", hex: "#1a1610", estucado: "Texto: 0 · 0 · 0 · 100\nFondo: 60 · 50 · 50 · 100", bond: "Texto: 0 · 0 · 0 · 100\nFondo: 60 · 50 · 50 · 100", pantone: "Negro de proceso", uso: "Texto en K puro. Áreas grandes en negro enriquecido." },
+  { color: "Crema", hex: "#f5eedc", estucado: "No se imprime", bond: "No se imprime", pantone: "Papel", uso: "Es el papel: pide hueso o crema en vez de imprimir el fondo." },
+];
+
+const minimos = [
+  { variante: "sello", medida: "15 mm de diámetro", por: "La burbuja más pequeña mide 0,4 mm y el aro 0,3 mm. Más chico, se cierran." },
+  { variante: "bloque", medida: "8 mm de ancho", por: "Las contraformas de la S y la D siguen abiertas." },
+  { variante: "fila", medida: "12 mm de ancho", por: "Mismas letras que el bloque, puestas en línea." },
+  { variante: "frasco", medida: "25 mm de ancho", por: "El vidrio es línea fina y las burbujas van al 60%: es la variante más frágil." },
+];
+
 const roles = [
   { rol: "--color-bg", claro: "crema", oscuro: "tinta" },
   { rol: "--color-bg-alt", claro: "crema honda", oscuro: "tinta honda" },
@@ -44,17 +61,18 @@ const espacios = [
 ---
 
 <Layout
-  title="Sistema de diseño — La Sociedad del Fermento"
-  description="Tokens, marca y componentes de LSDF. Página interna de referencia."
+  title="Brandbook · La Sociedad del Fermento"
+  description="Marca, color, impresión y sistema de diseño de LSDF. Uso interno."
   noindex
 >
   <header class="guia-header">
     <div class="wrap">
-      <p class="eyebrow">Referencia interna</p>
-      <h1>Sistema<br />LSDF</h1>
+      <p class="eyebrow">Uso interno</p>
+      <h1>Brandbook<br />LSDF</h1>
       <p class="lead">
-        Todo lo que hay aquí se lee del mismo <code>global.css</code> que usa el
-        sitio. Si un token cambia, esta página cambia con él.
+        Para aplicar a convocatorias, mandar a imprimir stickers y armar
+        fanzines. Los colores y la marca se leen del mismo <code>global.css</code>
+        que usa el sitio: si un token cambia, esta página cambia con él.
       </p>
     </div>
     <RootDivider class="divider" />
@@ -63,7 +81,7 @@ const espacios = [
   <!-- ================= LA SIGLA ================= -->
   <section>
     <div class="wrap">
-      <p class="eyebrow">01 — Marca</p>
+      <p class="eyebrow">01 · Marca</p>
       <h2>La sigla</h2>
       <p class="lead">
         Cuatro letras, cuatro golpes: <strong>L·S·D·F</strong>. Están dibujadas
@@ -170,7 +188,7 @@ const espacios = [
   <!-- ================= COLOR ================= -->
   <section class="alterna">
     <div class="wrap">
-      <p class="eyebrow">02 — Color</p>
+      <p class="eyebrow">02 · Color</p>
       <h2>Pigmentos</h2>
       <p class="lead">
         Seis valores crudos. Los componentes nunca los usan directo: usan roles.
@@ -223,10 +241,150 @@ const espacios = [
     </div>
   </section>
 
-  <!-- ================= TIPOGRAFÍA ================= -->
-  <section>
+  <!-- ================= IMPRESIÓN ================= -->
+  <section id="impresion">
     <div class="wrap">
-      <p class="eyebrow">03 — Tipografía</p>
+      <p class="eyebrow">03 · Impresión</p>
+      <h2>En papel</h2>
+      <p class="lead">
+        Lo que hay que saber antes de mandar un sticker o un fanzine a la
+        imprenta. La pantalla y el papel no mezclan color igual: aquí está la
+        traducción.
+      </p>
+
+      <h3 class="sub">Tintas</h3>
+      <div class="tabla-scroll">
+        <table class="tabla-tintas">
+          <thead>
+            <tr>
+              <th>Color</th>
+              <th>CMYK estucado</th>
+              <th>CMYK bond</th>
+              <th>Pantone</th>
+              <th>Cuándo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              tintasImpresion.map((t) => (
+                <tr>
+                  <td>
+                    <span class="tinta-nombre">
+                      <span class="muestra-sm" style={`background:${t.hex}`} />
+                      {t.color}
+                    </span>
+                  </td>
+                  <td>{t.estucado}</td>
+                  <td>{t.bond}</td>
+                  <td>{t.pantone}</td>
+                  <td>{t.uso}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="nota">
+        <strong>Estucado</strong> es papel brillante o satinado y vinilo de
+        sticker (perfil FOGRA39). <strong>Bond</strong> es papel sin brillo,
+        el de fotocopia y fanzine (FOGRA29). Los valores salen de convertir los
+        colores de pantalla con esos perfiles: son el punto de partida, y manda
+        la prueba de color de la imprenta. Los Pantone son los más cercanos y
+        hay que confirmarlos en una guía física antes de pedir tinta directa.
+      </p>
+      <p class="nota">
+        <strong>Tinta honda y crema honda no existen en papel.</strong> Impresas,
+        no se distinguen de tinta y crema: en bond las dos tintas oscuras dan
+        exactamente el mismo CMYK.
+      </p>
+
+      <h3 class="sub">Tamaño mínimo</h3>
+      <div class="minimos">
+        {
+          minimos.map((m) => (
+            <figure class="minimo">
+              <div class={`lienzo lienzo-bajo min-${m.variante}`}>
+                <Marca variante={m.variante} />
+              </div>
+              <figcaption>
+                <strong>{m.variante} · {m.medida}</strong>
+                <span>{m.por}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="nota">
+        Las marcas de arriba están dibujadas a su tamaño mínimo; en pantalla la
+        medida es aproximada. Por debajo del mínimo del sello, usa el bloque.
+      </p>
+
+      <h3 class="sub">Zona de respeto</h3>
+      <div class="respeto-fila">
+        <div class="respeto">
+          <div class="respeto-marca"><Marca variante="sello" /></div>
+        </div>
+        <p>
+          Alrededor del sello queda libre <strong>un cuarto de su diámetro</strong>:
+          ni texto, ni borde de corte, ni otra imagen. En el bloque y la fila, el
+          espacio libre es <strong>el alto de una letra</strong>. Es lo que
+          separa un sello de una mancha.
+        </p>
+      </div>
+
+      <h3 class="sub">Sticker y fanzine</h3>
+      <div class="formatos">
+        <div class="caja">
+          <span class="badge">Sticker</span>
+          <dl class="specs">
+            <dt>Troquel</dt><dd>Circular para el sello, 5 cm recomendado.</dd>
+            <dt>Sangrado</dt><dd>2 mm por fuera del corte.</dd>
+            <dt>Zona segura</dt><dd>3 mm por dentro del corte. La marca no la toca.</dd>
+            <dt>Color</dt><dd>Tinta sobre mostaza, como el avatar. O tinta sobre vinilo blanco o crema.</dd>
+          </dl>
+        </div>
+        <div class="caja">
+          <span class="badge">Fanzine</span>
+          <dl class="specs">
+            <dt>A una tinta</dt><dd>Fotocopia o risografía: todo en tinta, sobre papel crema.</dd>
+            <dt>A dos tintas</dt><dd>Tinta y mostaza. La terracota solo si hay tercera tinta.</dd>
+            <dt>Sangrado</dt><dd>3 mm en cada borde que llegue al filo.</dd>
+            <dt>Archivo</dt><dd>PDF con las fuentes incrustadas o pasadas a curvas.</dd>
+          </dl>
+        </div>
+      </div>
+      <p class="nota">
+        Ojo con el frasco a una tinta: sus burbujas van al 60% de opacidad, y en
+        fotocopia o risografía eso se vuelve trama de puntos. Para esas
+        impresiones, las burbujas van sólidas.
+      </p>
+
+      <h3 class="sub">Errores que hay que evitar</h3>
+      <div class="errores">
+        <figure class="error">
+          <div class="lienzo lienzo-bajo"><span class="err-estirada"><Marca variante="sello" /></span></div>
+          <figcaption><strong>No estirar</strong><span>El sello es un círculo. Se escala completo o no se escala.</span></figcaption>
+        </figure>
+        <figure class="error">
+          <div class="lienzo lienzo-bajo"><span class="err-anton">LSDF</span></div>
+          <figcaption><strong>No recomponer en Anton</strong><span>Las letras están dibujadas a mano. La tipografía se parece, pero no es la marca.</span></figcaption>
+        </figure>
+        <figure class="error">
+          <div class="lienzo lienzo-bajo"><span class="err-blur"><Marca variante="bloque" /></span></div>
+          <figcaption><strong>No difuminar la sombra</strong><span>La sombra de la marca es dura y mostaza. Nunca con desenfoque.</span></figcaption>
+        </figure>
+        <figure class="error">
+          <div class="lienzo lienzo-bajo lienzo-tinta"><span class="err-terracota"><Marca variante="bloque" /></span></div>
+          <figcaption><strong>No terracota sobre tinta</strong><span>No alcanza contraste. Sobre tinta, el acento es mostaza.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TIPOGRAFÍA ================= -->
+  <section class="alterna">
+    <div class="wrap">
+      <p class="eyebrow">04 · Tipografía</p>
       <h2>Tres voces</h2>
 
       <div class="voces">
@@ -265,9 +423,9 @@ const espacios = [
   </section>
 
   <!-- ================= ESPACIO Y FORMA ================= -->
-  <section class="alterna">
+  <section>
     <div class="wrap">
-      <p class="eyebrow">04 — Espacio y forma</p>
+      <p class="eyebrow">05 · Espacio y forma</p>
       <h2>Escala</h2>
       <p class="lead">
         Antes había veinte valores escogidos a mano. Ahora hay siete, más el
@@ -314,9 +472,9 @@ const espacios = [
   </section>
 
   <!-- ================= COMPONENTES ================= -->
-  <section>
+  <section class="alterna">
     <div class="wrap">
-      <p class="eyebrow">05 — Componentes</p>
+      <p class="eyebrow">06 · Componentes</p>
       <h2>Piezas</h2>
 
       <h3 class="sub">Botones</h3>
@@ -352,7 +510,7 @@ const espacios = [
   <!-- ================= SUPERFICIE OSCURA ================= -->
   <section data-surface="ink">
     <div class="wrap">
-      <p class="eyebrow">06 — Inversión</p>
+      <p class="eyebrow">07 · Inversión</p>
       <h2>Superficie oscura</h2>
       <p class="lead">
         Esta sección entera es <code>data-surface="ink"</code>. No hay una sola
@@ -380,7 +538,8 @@ const espacios = [
         <p class="lockup-nombre">La Sociedad<br />del Fermento</p>
       </div>
       <p class="nota">
-        Página interna. No está enlazada desde la navegación del sitio.
+        Uso interno. No está enlazada desde la navegación del sitio ni aparece
+        en buscadores, pero se puede compartir el enlace con una imprenta.
       </p>
     </div>
   </footer>
@@ -811,5 +970,162 @@ const espacios = [
 
   .guia-footer .nota {
     margin-top: var(--space-sm);
+  }
+
+  /* ---------- Impresión ---------- */
+  .tinta-nombre {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .muestra-sm {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    flex: none;
+  }
+
+  .tabla-tintas {
+    min-width: 760px;
+    table-layout: fixed;
+  }
+
+  .tabla-tintas th:nth-child(1) { width: 17%; }
+  .tabla-tintas th:nth-child(2),
+  .tabla-tintas th:nth-child(3) { width: 21%; }
+  .tabla-tintas th:nth-child(4) { width: 13%; }
+
+  .tabla-tintas td:nth-child(2),
+  .tabla-tintas td:nth-child(3) {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8rem;
+    white-space: pre;
+  }
+
+  .minimos,
+  .errores,
+  .formatos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+  }
+
+  .formatos {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .minimo,
+  .error {
+    margin: 0;
+  }
+
+  .lienzo-bajo {
+    height: 130px;
+    min-height: 0;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  /* Medidas físicas: el navegador aproxima 1 mm, por eso la nota. */
+  .min-sello :global(svg) { width: 15mm; height: auto; }
+  .min-bloque :global(svg) { width: 8mm; height: auto; }
+  .min-fila :global(svg) { width: 12mm; height: auto; }
+  .min-frasco :global(svg) { width: 25mm; height: auto; }
+
+  .respeto-fila {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  /* El padding es un cuarto del diámetro: 25% del ancho del sello. */
+  .respeto {
+    padding: 27px;
+    border: 1px dashed var(--color-accent-ink);
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0 6px,
+      color-mix(in srgb, var(--color-accent-ink) 10%, transparent) 6px 7px
+    );
+  }
+
+  .respeto-marca {
+    background: var(--color-bg);
+  }
+
+  .respeto-marca :global(svg) {
+    width: 108px;
+    height: auto;
+  }
+
+  .caja .badge {
+    margin-bottom: var(--space-sm);
+  }
+
+  .specs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-xs) var(--space-md);
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .specs dt {
+    font-family: var(--font-label);
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-accent-ink);
+    padding-top: 0.25rem;
+  }
+
+  .specs dd {
+    margin: 0;
+  }
+
+  .error figcaption strong::before {
+    content: "✕ ";
+    color: var(--lsdf-terracota);
+  }
+
+  .err-estirada :global(svg) {
+    width: 80px;
+    height: auto;
+    transform: scaleX(1.5);
+  }
+
+  .err-anton {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .err-blur :global(svg) {
+    width: 52px;
+    height: auto;
+    filter: drop-shadow(6px 8px 6px rgba(26, 22, 16, 0.45));
+  }
+
+  .lienzo-tinta {
+    background: var(--lsdf-tinta);
+  }
+
+  .err-terracota :global(svg) {
+    width: 52px;
+    height: auto;
+    color: var(--lsdf-terracota);
+  }
+
+  @media (max-width: 540px) {
+    .respeto-fila {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
   }
 </style>

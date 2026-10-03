@@ -5,6 +5,10 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lasociedaddelfermento.co',
-  // /estilo es referencia interna: no va al sitemap.
-  integrations: [sitemap({ filter: (page) => !page.includes('/estilo') })],
+  // /brandbook es de uso interno: no va al sitemap. /estilo era su nombre
+  // anterior y queda redirigido para no romper enlaces viejos.
+  redirects: { '/estilo': '/brandbook' },
+  integrations: [
+    sitemap({ filter: (page) => !page.includes('/brandbook') && !page.includes('/estilo') }),
+  ],
 });
