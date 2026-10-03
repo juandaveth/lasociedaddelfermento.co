@@ -68,6 +68,59 @@ const fichaDatos = [
   ["Instagram", "@lasociedaddelfermento"],
 ];
 
+// Archivos exportados en public/marca/ con scripts/exportar-marca.mjs.
+// Negro y crema salen transparentes: crema es para fondos oscuros.
+// Si se exporta una variante nueva, se agrega aquí.
+const descargas = [
+  {
+    nombre: "Sello",
+    variante: "sello",
+    uso: "La marca principal. Stickers, afiches, fanzines.",
+    versiones: [
+      { tinta: "Negro", archivo: "lsdf-sello-negro" },
+      { tinta: "Crema", archivo: "lsdf-sello-crema" },
+    ],
+  },
+  {
+    nombre: "Bloque",
+    variante: "bloque",
+    uso: "Sin anillo. Por debajo de 15 mm, donde el sello ya no se lee.",
+    versiones: [
+      { tinta: "Negro", archivo: "lsdf-bloque-negro" },
+      { tinta: "Crema", archivo: "lsdf-bloque-crema" },
+    ],
+  },
+  {
+    nombre: "Fila",
+    variante: "fila",
+    uso: "Una línea. Créditos al pie de una pieza, firmas, cabeceras anchas.",
+    versiones: [
+      { tinta: "Negro", archivo: "lsdf-fila-negro" },
+      { tinta: "Crema", archivo: "lsdf-fila-crema" },
+    ],
+  },
+  {
+    nombre: "Frasco",
+    variante: "frasco",
+    uso: "Camisetas, etiquetas y afiches. A una tinta, las burbujas van sólidas.",
+    versiones: [
+      { tinta: "Negro", archivo: "lsdf-frasco-negro" },
+      { tinta: "Crema", archivo: "lsdf-frasco-crema" },
+    ],
+  },
+  {
+    nombre: "Avatar",
+    variante: "avatar",
+    uso: "Burbujas sin el aro. La versión sobre mostaza es la foto de perfil de redes, que no admite transparencia.",
+    versiones: [
+      { tinta: "Negro", archivo: "lsdf-avatar-negro" },
+      { tinta: "Sobre mostaza", archivo: "lsdf-avatar-negro-sobre-mostaza" },
+    ],
+  },
+] as const;
+
+const anchosPng = [2048, 512, 128];
+
 const minimos = [
   { variante: "sello", medida: "15 mm de diámetro", por: "La burbuja más pequeña mide 0,4 mm y el aro 0,3 mm. Más chico, se cierran." },
   { variante: "bloque", medida: "8 mm de ancho", por: "Las contraformas de la S y la D siguen abiertas." },
@@ -227,6 +280,47 @@ const espacios = [
           </div>
           <figcaption>Camiseta o etiqueta: el frasco en crema sobre tinta.</figcaption>
         </figure>
+      </div>
+
+      <h3 class="sub" id="descargas">Descargas</h3>
+      <p class="lead-corto">
+        <strong>SVG</strong> es vectorial: escala sin perder calidad y es el que
+        hay que mandar a la imprenta. <strong>PNG</strong> es para pantalla y
+        documentos, en 2048, 512 y 128 px de ancho; el de 2048 aguanta
+        impresión hasta unos 17 cm. Negro va sobre fondos claros y crema sobre
+        oscuros, los dos con fondo transparente.
+      </p>
+      <div class="descargas">
+        {
+          descargas.map((d) => (
+            <article class="descarga">
+              <div class={`descarga-lienzo lienzo-${d.variante}`}>
+                <Marca variante={d.variante} />
+              </div>
+              <div class="descarga-info">
+                <h4 class="descarga-nombre">{d.nombre}</h4>
+                <p class="descarga-uso">{d.uso}</p>
+                {d.versiones.map((v) => (
+                  <div class="descarga-version">
+                    <span class={`descarga-tinta tinta-${v.tinta === "Crema" ? "crema" : v.tinta === "Negro" ? "negro" : "mostaza"}`}>
+                      {v.tinta}
+                    </span>
+                    <div class="descarga-botones">
+                      <a class="btn btn--sm" href={`/marca/${v.archivo}.svg`} download>
+                        SVG
+                      </a>
+                      {anchosPng.map((ancho) => (
+                        <a class="btn btn--outline btn--sm" href={`/marca/${v.archivo}-${ancho}.png`} download>
+                          {ancho}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -1324,5 +1418,111 @@ const espacios = [
     text-transform: uppercase;
     color: var(--color-accent-ink);
     text-underline-offset: 3px;
+  }
+
+  /* ---------- Descargas ---------- */
+  .lead-corto {
+    max-width: var(--medida);
+  }
+
+  .descargas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+  }
+
+  .descarga {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .descarga-lienzo {
+    display: grid;
+    place-items: center;
+    height: 150px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  /* Por alto y no por ancho: el bloque es vertical y la fila horizontal. */
+  .descarga-lienzo :global(svg) {
+    height: 92px;
+    width: auto;
+    max-width: 70%;
+  }
+
+  /* La fila es muy ancha: a 92 de alto pesa el doble que las demás. */
+  .lienzo-fila :global(svg) {
+    height: 36px;
+  }
+
+  .lienzo-bloque :global(svg) {
+    height: 80px;
+  }
+
+  .descarga-version {
+    padding: var(--space-xs) 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* El nombre de la tinta se pinta con su propio color de uso: crema
+     sobre tinta, porque es la versión para fondos oscuros. */
+  .descarga-tinta {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    padding: 0.1rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+  }
+
+  .tinta-negro {
+    border: 1px solid var(--lsdf-tinta);
+    color: var(--lsdf-tinta);
+  }
+
+  .tinta-crema {
+    background: var(--lsdf-tinta);
+    color: var(--lsdf-crema);
+  }
+
+  .tinta-mostaza {
+    background: var(--lsdf-mostaza);
+    color: var(--lsdf-tinta);
+  }
+
+  .descarga-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-md);
+  }
+
+  .descarga-nombre {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: var(--text-lg);
+  }
+
+  .descarga-uso {
+    flex: 1;
+    margin: var(--space-2xs) 0 var(--space-md);
+    font-size: 0.9rem;
+  }
+
+  .descarga-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
   }
 </style>
