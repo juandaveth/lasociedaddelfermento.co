@@ -22,6 +22,52 @@ const tintasImpresion = [
   { color: "Crema", hex: "#f5eedc", estucado: "No se imprime", bond: "No se imprime", pantone: "Papel", uso: "Es el papel: pide hueso o crema en vez de imprimir el fondo." },
 ];
 
+
+// Textos para convocatorias. Solo afirman lo que ya existe (sitio, app,
+// manifiesto). Nada de iniciativas que el grupo no haya decidido.
+const textos = [
+  {
+    id: "corto",
+    nombre: "Corto",
+    para: "Casillas de un párrafo, bios de redes, pie de una pieza.",
+    parrafos: [
+      "La Sociedad del Fermento es un colectivo de Medellín que hace comunidad alrededor de la fermentación. En el Parche Fermentero, un encuentro abierto e itinerante, cocinamos juntos, compartimos saberes y probamos lo que ha burbujeado en casa. Para nosotros un fermento es una tecnología viva: cuidarlo es aprender a cuidarnos.",
+    ],
+  },
+  {
+    id: "medio",
+    nombre: "Medio",
+    para: "\"Descripción del colectivo\" en la mayoría de formularios.",
+    parrafos: [
+      "La Sociedad del Fermento es un colectivo de Medellín que se reúne alrededor de la fermentación como práctica de cocina, de salud y de comunidad. Somos un proceso colectivo, abierto a cualquier persona con curiosidad y sin experiencia previa.",
+      "Nuestro espacio central es el Parche Fermentero: encuentros itinerantes en casas, librerías y espacios culturales de la ciudad, donde preparamos fermentos juntos, intercambiamos técnicas y probamos lo que cada quien trae. También hacemos catas abiertas y lotes de producción colectiva, como el kimchi, cuya venta ayuda a sostener el proyecto.",
+      "Trabajamos como un laboratorio: experimentamos, documentamos y compartimos lo aprendido. Nos interesan la relación entre alimento y ánimo, la salud digestiva, la autogestión y los saberes que permiten conservar comida sin refrigeración.",
+    ],
+  },
+  {
+    id: "largo",
+    nombre: "Largo",
+    para: "Convocatorias con sección de trayectoria, propuesta o justificación.",
+    parrafos: [
+      "La Sociedad del Fermento es un colectivo de Medellín que se reúne alrededor de la fermentación como práctica de cocina, de salud y de comunidad. Somos un proceso colectivo, abierto a cualquier persona con curiosidad y sin experiencia previa.",
+      "Nuestro espacio central es el Parche Fermentero: encuentros itinerantes en casas, librerías y espacios culturales de la ciudad, donde preparamos fermentos juntos, intercambiamos técnicas y probamos lo que cada quien trae. También hacemos catas abiertas y lotes de producción colectiva, como el kimchi, cuya venta ayuda a sostener el proyecto. Para coordinarnos construimos nuestra propia aplicación, donde la comunidad reserva cupo en los encuentros y llevamos el inventario de cada lote.",
+      "Trabajamos como un laboratorio: experimentamos, documentamos y compartimos lo aprendido. Nos interesan la relación entre alimento y ánimo, la salud digestiva, la autogestión y los saberes que permiten conservar comida sin refrigeración, útiles en una emergencia.",
+      "Nuestro manifiesto lo resume así: «Las ideas juntas fermentan mejor que existiendo separadas». Y lo cierra con un compromiso: creemos en el bienestar como código abierto, y ningún saber sobre el fermento se vende, se esconde ni se monopoliza.",
+    ],
+  },
+].map((t) => ({
+  ...t,
+  palabras: t.parrafos.join(" ").split(/\s+/).filter(Boolean).length,
+}));
+
+const fichaDatos = [
+  ["Nombre", "La Sociedad del Fermento"],
+  ["Sigla", "LSDF"],
+  ["Ciudad", "Medellín, Colombia"],
+  ["Sitio web", "lasociedaddelfermento.co"],
+  ["Instagram", "@lasociedaddelfermento"],
+];
+
 const minimos = [
   { variante: "sello", medida: "15 mm de diámetro", por: "La burbuja más pequeña mide 0,4 mm y el aro 0,3 mm. Más chico, se cierran." },
   { variante: "bloque", medida: "8 mm de ancho", por: "Las contraformas de la S y la D siguen abiertas." },
@@ -381,10 +427,57 @@ const espacios = [
     </div>
   </section>
 
-  <!-- ================= TIPOGRAFÍA ================= -->
-  <section class="alterna">
+  <!-- ================= CONVOCATORIAS ================= -->
+  <section id="convocatorias" class="alterna">
     <div class="wrap">
-      <p class="eyebrow">04 · Tipografía</p>
+      <p class="eyebrow">04 · Convocatorias</p>
+      <h2>Quiénes somos</h2>
+      <p class="lead">
+        El mismo texto en tres largos, para los topes más comunes: hasta 50,
+        150 y 300 palabras. Si una convocatoria pide otro tope, empieza por el
+        más cercano y recorta desde ahí: no escribas uno nuevo.
+      </p>
+
+      <div class="textos">
+        {
+          textos.map((t) => (
+            <article class="texto" id={`texto-${t.id}`}>
+              <header class="texto-cabeza">
+                <div>
+                  <h3 class="texto-nombre">{t.nombre}</h3>
+                  <p class="meta">{t.palabras} palabras</p>
+                </div>
+                <button type="button" class="btn btn--outline btn--sm copiar" data-copiar={`texto-${t.id}`}>
+                  Copiar
+                </button>
+              </header>
+              <p class="texto-para">{t.para}</p>
+              <div class="texto-cuerpo">
+                {t.parrafos.map((parrafo) => <p>{parrafo}</p>)}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <h3 class="sub">Ficha de datos</h3>
+      <dl class="ficha">
+        {
+          fichaDatos.map(([campo, valor]) => (
+            <div class="ficha-fila">
+              <dt>{campo}</dt>
+              <dd>{valor}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= TIPOGRAFÍA ================= -->
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">05 · Tipografía</p>
       <h2>Tres voces</h2>
 
       <div class="voces">
@@ -392,16 +485,19 @@ const espacios = [
           <p class="voz-muestra f-display">Fermento</p>
           <code>--font-display</code>
           <span>Anton. Solo titulares, siempre en mayúscula.</span>
+          <a class="voz-link" href="https://fonts.google.com/specimen/Anton" target="_blank" rel="noopener">Anton en Google Fonts ↗</a>
         </div>
         <div class="voz">
           <p class="voz-muestra f-body">Fermento</p>
           <code>--font-body</code>
           <span>Fraunces. Cuerpo, bajadas y nombres de obra en cursiva.</span>
+          <a class="voz-link" href="https://fonts.google.com/specimen/Fraunces" target="_blank" rel="noopener">Fraunces en Google Fonts ↗</a>
         </div>
         <div class="voz">
           <p class="voz-muestra f-label">Fermento</p>
           <code>--font-label</code>
           <span>Work Sans. Eyebrows, botones, metadatos, navegación.</span>
+          <a class="voz-link" href="https://fonts.google.com/specimen/Work+Sans" target="_blank" rel="noopener">Work Sans en Google Fonts ↗</a>
         </div>
       </div>
 
@@ -423,9 +519,9 @@ const espacios = [
   </section>
 
   <!-- ================= ESPACIO Y FORMA ================= -->
-  <section>
+  <section class="alterna">
     <div class="wrap">
-      <p class="eyebrow">05 · Espacio y forma</p>
+      <p class="eyebrow">06 · Espacio y forma</p>
       <h2>Escala</h2>
       <p class="lead">
         Antes había veinte valores escogidos a mano. Ahora hay siete, más el
@@ -472,9 +568,9 @@ const espacios = [
   </section>
 
   <!-- ================= COMPONENTES ================= -->
-  <section class="alterna">
+  <section>
     <div class="wrap">
-      <p class="eyebrow">06 · Componentes</p>
+      <p class="eyebrow">07 · Componentes</p>
       <h2>Piezas</h2>
 
       <h3 class="sub">Botones</h3>
@@ -510,7 +606,7 @@ const espacios = [
   <!-- ================= SUPERFICIE OSCURA ================= -->
   <section data-surface="ink">
     <div class="wrap">
-      <p class="eyebrow">07 · Inversión</p>
+      <p class="eyebrow">08 · Inversión</p>
       <h2>Superficie oscura</h2>
       <p class="lead">
         Esta sección entera es <code>data-surface="ink"</code>. No hay una sola
@@ -544,6 +640,25 @@ const espacios = [
     </div>
   </footer>
 </Layout>
+
+<script>
+  // Copia el texto plano, con un salto de línea en blanco entre párrafos,
+  // que es lo que espera un campo de formulario.
+  document.querySelectorAll<HTMLButtonElement>("[data-copiar]").forEach((boton) => {
+    boton.addEventListener("click", async () => {
+      const id = boton.dataset.copiar!;
+      const parrafos = document.querySelectorAll(`#${id} .texto-cuerpo p`);
+      const texto = Array.from(parrafos, (p) => p.textContent?.trim()).join("\n\n");
+      try {
+        await navigator.clipboard.writeText(texto);
+        boton.textContent = "Copiado";
+      } catch {
+        boton.textContent = "Selecciona y copia";
+      }
+      setTimeout(() => (boton.textContent = "Copiar"), 2000);
+    });
+  });
+</script>
 
 <style>
   .guia-header {
@@ -1127,5 +1242,87 @@ const espacios = [
       grid-template-columns: 1fr;
       justify-items: start;
     }
+  }
+
+  /* ---------- Convocatorias ---------- */
+  .textos {
+    display: grid;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .texto {
+    padding: var(--space-lg);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+  }
+
+  .texto-cabeza {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .texto-nombre {
+    font-size: var(--text-h3);
+  }
+
+  .texto-cabeza .meta {
+    margin: var(--space-2xs) 0 0;
+  }
+
+  .texto-para {
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: 0.9rem;
+    opacity: 0.75;
+  }
+
+  .texto-cuerpo {
+    max-width: var(--medida);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .ficha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0 var(--space-xl);
+    margin: 0;
+    max-width: 760px;
+  }
+
+  .ficha-fila {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .ficha dt {
+    font-family: var(--font-label);
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-accent-ink);
+    padding-top: 0.2rem;
+  }
+
+  .ficha dd {
+    margin: 0;
+    text-align: right;
+  }
+
+  .voz-link {
+    font-family: var(--font-label);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+    text-underline-offset: 3px;
   }
 </style>
