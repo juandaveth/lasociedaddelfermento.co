@@ -80,12 +80,13 @@ export const BURBUJAS_FRASCO = [
 ];
 
 /**
- * Logotipo horizontal: sello + nombre completo en una línea. Las mismas
- * proporciones del lockup del header (sello de 2.7rem, nombre de 1rem,
- * espacio de 0.7rem), pero con el nombre en una sola línea y trazado.
+ * Logotipo horizontal: sello + nombre completo en dos líneas, el mismo
+ * lockup del header (sello de 2.7rem, nombre de 1rem, espacio de 0.7rem)
+ * pero con el nombre trazado.
  */
 const HORIZONTAL = (() => {
-  const altoNombre = 38; // alto de mayúscula, en la escala del sello de 120
+  // Las dos líneas del header ocupan ~1.86rem de los 2.7rem del sello.
+  const altoNombre = 83; // en la escala del sello de 120
   const esc = altoNombre / NOMBRE.alto;
   const x = 120 + 30;
   return {

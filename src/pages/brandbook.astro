@@ -84,7 +84,7 @@ const descargas = [
   {
     nombre: "Horizontal",
     variante: "horizontal",
-    uso: "Sello + nombre completo en una línea. Convocatorias, membretes, banners y créditos donde hay que decir quiénes somos.",
+    uso: "Sello + nombre completo en dos líneas. Convocatorias, membretes, banners y créditos donde hay que decir quiénes somos.",
     versiones: [
       { tinta: "Negro", archivo: "lsdf-horizontal-negro" },
       { tinta: "Crema", archivo: "lsdf-horizontal-crema" },
@@ -130,11 +130,19 @@ const descargas = [
 
 const anchosPng = [2048, 512, 128];
 
+// Frases del manifiesto para totebag, en public/marca/totebag/. Una tinta:
+// crema para lona negra, negro para lona cruda.
+const totes = [
+  { archivo: "tote-cocinar-con-el-tiempo", frase: "Fermentar es cocinar con el tiempo." },
+  { archivo: "tote-regueros", frase: "Limpiaremos los regueros que sean necesarios." },
+  { archivo: "tote-ideas-juntas", frase: "Las ideas juntas fermentan mejor que separadas." },
+];
+
 const minimos = [
   { variante: "sello", medida: "15 mm de diámetro", por: "La burbuja más pequeña mide 0,4 mm y el aro 0,3 mm. Más chico, se cierran." },
   { variante: "bloque", medida: "8 mm de ancho", por: "Las contraformas de la S y la D siguen abiertas." },
   { variante: "fila", medida: "12 mm de ancho", por: "Mismas letras que el bloque, puestas en línea." },
-  { variante: "horizontal", medida: "76 mm de ancho", por: "Lo que necesita el sello para llegar a sus 15 mm. Más chico, usa el sello solo." },
+  { variante: "horizontal", medida: "49 mm de ancho", por: "Lo que necesita el sello para llegar a sus 15 mm. Más chico, usa el sello solo." },
   { variante: "frasco", medida: "25 mm de ancho", por: "El vidrio es línea fina y las burbujas van al 60%: es la variante más frágil." },
 ];
 
@@ -253,13 +261,13 @@ const espacios = [
           </figcaption>
         </figure>
 
-        <figure class="variante variante-ancha">
+        <figure class="variante">
           <div class="lienzo m-horizontal"><Marca variante="horizontal" /></div>
           <figcaption>
             <strong>Horizontal · logotipo</strong>
             <span
-              >El sello con el nombre completo en una línea. El nombre va en
-              Anton, como en el header, pero trazado en vectores: el SVG no
+              >El lockup del header como archivo: sello y nombre completo en dos
+              líneas. El nombre va en Anton, pero trazado en vectores: el SVG no
               necesita la fuente instalada para verse igual en la imprenta.</span
             >
             <code>&lt;Marca variante="horizontal" /&gt;</code>
@@ -303,6 +311,34 @@ const espacios = [
           </div>
           <figcaption>Camiseta o etiqueta: el frasco en crema sobre tinta.</figcaption>
         </figure>
+      </div>
+
+      <h3 class="sub" id="totebags">Totebags</h3>
+      <p class="lead-corto">
+        Tres frases del manifiesto, a una tinta y con el sello abajo. Cada
+        línea se estira al mismo ancho, como un cartel. Sobre bolsa negra van
+        en crema; el SVG sale a 30 cm de ancho, el área de impresión de una
+        tote.
+      </p>
+      <div class="totes">
+        {
+          totes.map((t) => (
+            <figure class="tote">
+              <svg class="tote-bolsa" viewBox="0 0 400 470" role="img" aria-label={`Totebag negra: ${t.frase}`}>
+                <path d="M128 130 V92 Q128 30 200 30 Q272 30 272 92 V130" fill="none" stroke="#141312" stroke-width="16" stroke-linecap="round" />
+                <rect x="40" y="118" width="320" height="340" rx="6" fill="#141312" />
+                <image href={`/marca/totebag/${t.archivo}-crema.svg`} x="80" y="158" width="240" height="260" />
+              </svg>
+              <figcaption>
+                <span>{t.frase}</span>
+                <div class="descarga-botones">
+                  <a class="btn btn--sm" href={`/marca/totebag/${t.archivo}-crema.svg`} download>SVG crema</a>
+                  <a class="btn btn--outline btn--sm" href={`/marca/totebag/${t.archivo}-negro.svg`} download>SVG negro</a>
+                </div>
+              </figcaption>
+            </figure>
+          ))
+        }
       </div>
 
       <h3 class="sub" id="descargas">Descargas</h3>
@@ -847,13 +883,8 @@ const espacios = [
     height: auto;
   }
 
-  /* El horizontal es cinco veces más ancho que alto: ocupa toda la fila. */
-  .variante-ancha {
-    grid-column: 1 / -1;
-  }
-
   .m-horizontal :global(svg) {
-    width: min(460px, 100%);
+    width: 200px;
     height: auto;
   }
 
@@ -917,6 +948,31 @@ const espacios = [
   .cartel :global(svg) {
     width: 110px;
     height: auto;
+  }
+
+  .totes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+  }
+
+  .tote {
+    margin: 0;
+  }
+
+  /* La bolsa se dibuja sobre el fondo de la página, sin lienzo propio:
+     así se lee como objeto y no como otra tarjeta. */
+  .tote-bolsa {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .tote figcaption {
+    display: grid;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
   }
 
   .app-camiseta {
@@ -1276,7 +1332,7 @@ const espacios = [
   .min-sello :global(svg) { width: 15mm; height: auto; }
   .min-bloque :global(svg) { width: 8mm; height: auto; }
   .min-fila :global(svg) { width: 12mm; height: auto; }
-  .min-horizontal :global(svg) { width: 76mm; max-width: 100%; height: auto; }
+  .min-horizontal :global(svg) { width: 49mm; max-width: 100%; height: auto; }
   .min-frasco :global(svg) { width: 25mm; height: auto; }
 
   .respeto-fila {
@@ -1500,7 +1556,7 @@ const espacios = [
 
   .lienzo-horizontal :global(svg) {
     height: auto;
-    width: 82%;
+    width: 74%;
     max-width: none;
   }
 
