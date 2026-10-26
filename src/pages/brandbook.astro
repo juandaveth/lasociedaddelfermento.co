@@ -82,6 +82,15 @@ const descargas = [
     ],
   },
   {
+    nombre: "Horizontal",
+    variante: "horizontal",
+    uso: "Sello + nombre completo en una línea. Convocatorias, membretes, banners y créditos donde hay que decir quiénes somos.",
+    versiones: [
+      { tinta: "Negro", archivo: "lsdf-horizontal-negro" },
+      { tinta: "Crema", archivo: "lsdf-horizontal-crema" },
+    ],
+  },
+  {
     nombre: "Bloque",
     variante: "bloque",
     uso: "Sin anillo. Por debajo de 15 mm, donde el sello ya no se lee.",
@@ -125,6 +134,7 @@ const minimos = [
   { variante: "sello", medida: "15 mm de diámetro", por: "La burbuja más pequeña mide 0,4 mm y el aro 0,3 mm. Más chico, se cierran." },
   { variante: "bloque", medida: "8 mm de ancho", por: "Las contraformas de la S y la D siguen abiertas." },
   { variante: "fila", medida: "12 mm de ancho", por: "Mismas letras que el bloque, puestas en línea." },
+  { variante: "horizontal", medida: "76 mm de ancho", por: "Lo que necesita el sello para llegar a sus 15 mm. Más chico, usa el sello solo." },
   { variante: "frasco", medida: "25 mm de ancho", por: "El vidrio es línea fina y las burbujas van al 60%: es la variante más frágil." },
 ];
 
@@ -240,6 +250,19 @@ const espacios = [
               correo y créditos al pie de una pieza.</span
             >
             <code>&lt;Marca variante="fila" /&gt;</code>
+          </figcaption>
+        </figure>
+
+        <figure class="variante variante-ancha">
+          <div class="lienzo m-horizontal"><Marca variante="horizontal" /></div>
+          <figcaption>
+            <strong>Horizontal · logotipo</strong>
+            <span
+              >El sello con el nombre completo en una línea. El nombre va en
+              Anton, como en el header, pero trazado en vectores: el SVG no
+              necesita la fuente instalada para verse igual en la imprenta.</span
+            >
+            <code>&lt;Marca variante="horizontal" /&gt;</code>
           </figcaption>
         </figure>
       </div>
@@ -824,6 +847,16 @@ const espacios = [
     height: auto;
   }
 
+  /* El horizontal es cinco veces más ancho que alto: ocupa toda la fila. */
+  .variante-ancha {
+    grid-column: 1 / -1;
+  }
+
+  .m-horizontal :global(svg) {
+    width: min(460px, 100%);
+    height: auto;
+  }
+
   .m-bloque :global(svg) {
     width: 68px;
     height: auto;
@@ -1243,6 +1276,7 @@ const espacios = [
   .min-sello :global(svg) { width: 15mm; height: auto; }
   .min-bloque :global(svg) { width: 8mm; height: auto; }
   .min-fila :global(svg) { width: 12mm; height: auto; }
+  .min-horizontal :global(svg) { width: 76mm; max-width: 100%; height: auto; }
   .min-frasco :global(svg) { width: 25mm; height: auto; }
 
   .respeto-fila {
@@ -1462,6 +1496,12 @@ const espacios = [
 
   .lienzo-bloque :global(svg) {
     height: 80px;
+  }
+
+  .lienzo-horizontal :global(svg) {
+    height: auto;
+    width: 82%;
+    max-width: none;
   }
 
   .descarga-version {

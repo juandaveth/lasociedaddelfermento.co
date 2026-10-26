@@ -9,6 +9,7 @@
  * asta de 6, calle de 3. Dibujadas a mano, no compuestas en Anton, para
  * que el logo no dependa de que cargue una webfont.
  */
+import { NOMBRE } from "./nombre.mjs";
 
 export const LETRAS = [
   // L
@@ -78,7 +79,24 @@ export const BURBUJAS_FRASCO = [
   { cx: 45, cy: 48, r: 2.3 },
 ];
 
-export const VARIANTES = ["sello", "avatar", "bloque", "fila", "frasco"];
+/**
+ * Logotipo horizontal: sello + nombre completo en una línea. Las mismas
+ * proporciones del lockup del header (sello de 2.7rem, nombre de 1rem,
+ * espacio de 0.7rem), pero con el nombre en una sola línea y trazado.
+ */
+const HORIZONTAL = (() => {
+  const altoNombre = 38; // alto de mayúscula, en la escala del sello de 120
+  const esc = altoNombre / NOMBRE.alto;
+  const x = 120 + 30;
+  return {
+    esc,
+    x,
+    y: +((120 - altoNombre) / 2).toFixed(2),
+    ancho: Math.ceil(x + NOMBRE.ancho * esc),
+  };
+})();
+
+export const VARIANTES = ["sello", "avatar", "bloque", "fila", "frasco", "horizontal"];
 
 export const VIEW_BOX = {
   fila: "0 0 81 28",
@@ -86,6 +104,7 @@ export const VIEW_BOX = {
   sello: "0 0 120 120",
   avatar: "0 0 120 120",
   frasco: "0 0 90 130",
+  horizontal: `0 0 ${HORIZONTAL.ancho} 120`,
 };
 
 /** Devuelve el interior del <svg> para una variante. */
@@ -125,6 +144,12 @@ export function contenido(variante) {
             `<circle cx="${b.cx}" cy="${b.cy}" r="${b.r}" fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.6"/>`
         ).join(""),
         `<g transform="translate(28.4 59.9) scale(0.85)">${bloque2x2()}</g>`,
+      ].join("");
+
+    case "horizontal":
+      return [
+        contenido("sello"),
+        `<path d="${NOMBRE.d}" transform="translate(${HORIZONTAL.x} ${HORIZONTAL.y}) scale(${+HORIZONTAL.esc.toFixed(4)})"/>`,
       ].join("");
 
     default:
