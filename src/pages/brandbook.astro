@@ -368,6 +368,7 @@ const espacios = [
                       <a class="btn btn--sm" href={`/marca/${v.archivo}.svg`} download>
                         SVG
                       </a>
+                      <span class="descarga-formato">PNG</span>
                       {anchosPng.map((ancho) => (
                         <a class="btn btn--outline btn--sm" href={`/marca/${v.archivo}-${ancho}.png`} download>
                           {ancho}
@@ -1619,6 +1620,22 @@ const espacios = [
   .descarga-botones {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-xs);
+  }
+
+  /* Sin esta etiqueta los anchos se leían como números sueltos y no como
+     el PNG en tres tamaños. */
+  .descarga-formato {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--track-label);
+    margin-left: var(--space-xs);
+  }
+
+  /* SVG + etiqueta + tres anchos tienen que caber en una fila de tarjeta. */
+  .descarga-version .btn--sm {
+    padding: 0.5rem 0.75rem;
   }
 </style>
