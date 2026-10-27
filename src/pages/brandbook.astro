@@ -343,12 +343,28 @@ const espacios = [
 
       <h3 class="sub" id="descargas">Descargas</h3>
       <p class="lead-corto">
-        <strong>SVG</strong> es vectorial: escala sin perder calidad y es el que
-        hay que mandar a la imprenta. <strong>PNG</strong> es para pantalla y
-        documentos, en 2048, 512 y 128 px de ancho; el de 2048 aguanta
-        impresión hasta unos 17 cm. Negro va sobre fondos claros y crema sobre
-        oscuros, los dos con fondo transparente.
+        Cada marca viene en dos colores y en dos formatos. Haz clic en un botón
+        y el archivo se guarda en tu carpeta de Descargas. ¿Cuál bajar?
       </p>
+      <ul class="guia-descarga">
+        <li>
+          <strong>SVG</strong> (el botón negro): un solo archivo, sin tamaños
+          que escoger. El logo está dibujado con curvas y no con puntos, así que
+          se puede agrandar o achicar todo lo que haga falta sin que se pixele.
+          Es el que se manda a la imprenta o a quien diseñe, y también se puede
+          subir a Canva, Figma o Illustrator.
+        </li>
+        <li>
+          <strong>PNG:</strong> una imagen común, como una foto. El número de
+          cada botón es el ancho en píxeles: <strong>2048</strong> para documentos
+          e impresiones pequeñas (hasta unos 17 cm), <strong>512</strong> para
+          redes y presentaciones, <strong>128</strong> para firmas de correo.
+        </li>
+        <li>
+          <strong>Negro o crema:</strong> negro para fondos claros, crema para
+          fondos oscuros. Los dos tienen el fondo transparente.
+        </li>
+      </ul>
       <div class="descargas">
         {
           descargas.map((d) => (
@@ -368,7 +384,7 @@ const espacios = [
                       <a class="btn btn--sm" href={`/marca/${v.archivo}.svg`} download>
                         SVG
                       </a>
-                      <span class="descarga-formato">PNG</span>
+                      <span class="descarga-formato">PNG:</span>
                       {anchosPng.map((ancho) => (
                         <a class="btn btn--outline btn--sm" href={`/marca/${v.archivo}-${ancho}.png`} download>
                           {ancho}
@@ -1514,6 +1530,14 @@ const espacios = [
   /* ---------- Descargas ---------- */
   .lead-corto {
     max-width: var(--medida);
+  }
+
+  .guia-descarga {
+    max-width: var(--medida);
+    margin: var(--space-sm) 0 var(--space-lg);
+    padding-left: 1.2rem;
+    display: grid;
+    gap: var(--space-xs);
   }
 
   .descargas {
