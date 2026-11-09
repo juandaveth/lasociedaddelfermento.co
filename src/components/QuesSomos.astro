@@ -1,0 +1,63 @@
+---
+---
+
+<!-- Statement composition: one strong claim, big type, spare -->
+<section id="que-somos" class="que-somos">
+  <div class="wrap">
+    <p class="eyebrow">Qué somos</p>
+    <h2>Un colectivo<br />de Medellín</h2>
+    <p class="bajada">
+      La Sociedad del Fermento hace comunidad alrededor de la fermentación.
+      Encuentros abiertos e itinerantes, cocina compartida, saberes que circulan
+      y lo que ha burbujeado en casa.
+    </p>
+    <blockquote class="cita">
+      Para nosotros un fermento es una tecnología viva: cuidarlo es aprender a cuidarnos.
+    </blockquote>
+  </div>
+</section>
+
+<style>
+  .que-somos {
+    background: var(--color-paper);
+  }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  h2 {
+    margin: var(--space-xs) 0 var(--space-lg);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    max-width: 14ch;
+  }
+
+  .bajada {
+    font-size: var(--text-lead);
+    max-width: 54ch;
+    line-height: 1.5;
+    margin-bottom: var(--space-xl);
+  }
+
+  /* contrast fix: tinta text, mostaza border only — FAIL 40 fix */
+  .cita {
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    border-left: 5px solid var(--color-accent);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+    line-height: 1.4;
+    color: var(--color-ink);    /* was var(--lsdf-mostaza) = 1.9:1 — fixed */
+    max-width: 46ch;
+    background: var(--color-paper-2);
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  }
+
+  @media (max-width: 40rem) {
+    h2 { font-size: clamp(2.5rem, 10vw, 3.5rem); }
+    .cita { padding: var(--space-sm) var(--space-md); }
+  }
+</style>

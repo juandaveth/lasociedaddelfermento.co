@@ -1,0 +1,150 @@
+---
+import QRCode from 'qrcode';
+
+const FORM_URL = "https://forms.gle/3aH6nHbXmFVrwjJf7";
+const FORM_FULL_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeoYc6VNh2VIOTtM7YLPGXPJralFYhyG28ycmmjxdiOpESbNA/viewform";
+const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
+
+const qrSvg = await QRCode.toString(FORM_FULL_URL, {
+  type: 'svg',
+  width: 128,
+  margin: 1,
+  color: { dark: '#1a1610', light: '#f5f0e8' },
+});
+---
+
+<!-- Band composition: committed mostaza field, posture declared in tokens stamp -->
+<section id="fermentemos" class="fermentemos">
+  <div class="wrap fermentemos-inner">
+    <div class="fermentemos-texto">
+      <p class="eyebrow">Fermentemos juntos</p>
+      <h2>¿Qué te gustaría<br />hacer con nosotros?</h2>
+      <p class="bajada">
+        Déjanos tu idea: un taller, una exploración, una alianza con tu espacio
+        o algo que todavía está madurando. El equipo de LSDF lee todas las
+        propuestas y te escribirá pronto.
+      </p>
+      <div class="fermentemos-acciones">
+        <a href={FORM_URL} target="_blank" rel="noopener" class="btn btn--tinta">Dejar mi idea</a>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="ig-handle">@lasociedaddelfermento</a>
+      </div>
+    </div>
+    <div class="fermentemos-qr" aria-hidden="true">
+      <div class="qr-tarjeta">
+        <div class="qr-slot" set:html={qrSvg} />
+        <p class="qr-etiqueta">Escanea para dejar tu idea</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Committed posture: full mostaza field — gate 23 dismissed in stamp */
+  .fermentemos {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* gate 54: eyebrow in ink, not terracota (which vanishes on accent bg) */
+  .fermentemos .eyebrow {
+    color: var(--color-accent-ink);
+    opacity: 0.65;
+  }
+
+  h2 {
+    margin: var(--space-xs) 0 var(--space-md);
+  }
+
+  .bajada {
+    font-size: var(--text-lead);
+    max-width: 46ch;
+    margin-bottom: 0;
+  }
+
+  .fermentemos-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  .fermentemos-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .btn--tinta {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-color: var(--color-ink);
+    box-shadow: 6px 6px 0 0 var(--color-paper);
+  }
+
+  .btn--tinta:hover {
+    background: transparent;
+    color: var(--color-ink);
+    box-shadow: none;
+  }
+
+  /* gate 54/67: sentence case handle, no tracking */
+  .ig-handle {
+    font-family: var(--font-outlier);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color-accent-ink);
+    text-decoration: none;
+    opacity: 0.75;
+  }
+
+  .ig-handle:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .qr-tarjeta {
+    background: var(--color-paper);
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-card);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .qr-slot {
+    width: 200px;
+    height: 200px;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+
+  .qr-slot :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* gate 54/67: sentence case, no tracking */
+  .qr-etiqueta {
+    margin: 0;
+    font-family: var(--font-outlier);
+    font-size: var(--text-xs);
+    color: var(--color-ink);
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .fermentemos-inner { grid-template-columns: 1fr; }
+    .fermentemos-qr { display: none; }
+  }
+</style>

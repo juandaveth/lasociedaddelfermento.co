@@ -33,20 +33,19 @@ const year = new Date().getFullYear();
     gap: var(--space-md);
   }
 
+  /* gate 54/67: sentence case, no tracking */
   .footer-meta {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
-    font-family: var(--font-label);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.75rem;
+    font-family: var(--font-outlier);
+    font-size: var(--text-sm);
     opacity: 0.75;
   }
 
   .footer-meta a {
     text-decoration: none;
-    color: var(--color-accent-ink);
+    color: var(--color-ink);
     font-weight: 600;
   }
 </style>

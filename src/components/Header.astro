@@ -12,13 +12,12 @@ const APP_URL = "https://app.lasociedaddelfermento.co";
       <span class="lockup-nombre">La Sociedad<br />del Fermento</span>
     </a>
     <nav>
+      <a href="#que-somos">Nosotros</a>
       <a href="#parche">El Parche</a>
       <a href="#manifiesto">Manifiesto</a>
-      <a href="#sinfonia">Sinfonía</a>
-      <a href="#blog">Blog</a>
-      <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn--outline btn--sm"
-        >Instagram</a
-      >
+      <a href="#donde">Dónde</a>
+      <a href="#fermentemos">Fermentemos</a>
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn--outline btn--sm">Instagram</a>
       <a href={APP_URL} class="btn btn--sm">App</a>
     </nav>
   </div>
@@ -28,9 +27,9 @@ const APP_URL = "https://app.lasociedaddelfermento.co";
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 20;
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-line);
+    z-index: var(--z-sticky-nav);
+    background: var(--color-paper);
+    border-bottom: 1px solid var(--color-rule);
   }
 
   .header-inner {
@@ -41,15 +40,14 @@ const APP_URL = "https://app.lasociedaddelfermento.co";
     padding-bottom: var(--space-sm);
   }
 
+  /* gate 54/67: sentence case, no tracking */
   nav {
     display: flex;
     align-items: center;
     gap: var(--space-lg);
-    font-family: var(--font-label);
-    text-transform: uppercase;
-    letter-spacing: var(--track-label);
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-family: var(--font-outlier);
+    font-size: var(--text-sm);
+    font-weight: 500;
   }
 
   nav a:not(.btn) {
@@ -57,14 +55,12 @@ const APP_URL = "https://app.lasociedaddelfermento.co";
     color: var(--color-ink);
   }
 
-  @media (max-width: 640px) {
-    nav a:not(.btn) {
-      display: none;
-    }
+  nav a:not(.btn):hover {
+    color: var(--color-focus);
+  }
 
-    /* En móvil el bloque LSDF carga solo la marca. */
-    .lockup-nombre {
-      display: none;
-    }
+  @media (max-width: 800px) {
+    nav a:not(.btn) { display: none; }
+    .lockup-nombre { display: none; }
   }
 </style>

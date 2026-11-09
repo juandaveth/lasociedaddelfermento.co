@@ -1,93 +1,142 @@
 ---
-import { Image } from "astro:assets";
-import RootDivider from "./illustrations/RootDivider.astro";
-import heroPhoto from "../assets/hero_comunidad.jpg";
+import Marca from "./illustrations/Marca.astro";
 
 const INSTAGRAM_URL = "https://www.instagram.com/lasociedaddelfermento";
 const APP_URL = "https://app.lasociedaddelfermento.co";
 ---
 
 <section id="top" class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <h1>
-        La Sociedad<br />
-        del Fermento
-      </h1>
-      <p class="lead hero-sub">
-        Una comunidad abierta para curiosos, entusiastas y quienes se
-        apasionan por la fermentación. Un espacio que da la bienvenida a
-        quien quiera aprender, probar y compartir — del que hace parte
-        <strong> El Parche Fermentero</strong>, nuestro encuentro quincenal.
-      </p>
-      <div class="hero-actions">
-        <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn"
-          >Escríbenos por Instagram</a
-        >
-        <a href={APP_URL} class="btn">App</a>
-        <a href="#parche" class="btn btn--outline">Ver el Parche</a>
-      </div>
+  <div class="hero-inner">
+    <!-- frasco: variante para afiches y piezas del Parche — brandbook §01 -->
+    <div class="hero-frasco-wrap">
+      <Marca variante="frasco" titulo="La Sociedad del Fermento" />
     </div>
-    <div class="hero-art">
-      <div class="photo-frame hero-foto">
-        <Image
-          src={heroPhoto}
-          alt="Integrantes de La Sociedad del Fermento con delantales LSDF en el Taller Ethel Gilmour"
-          widths={[400, 700, 1000]}
-          sizes="(max-width: 800px) 90vw, 500px"
-        />
-      </div>
+    <h1>Las ideas juntas<br />fermentan mejor</h1>
+    <p class="lead hero-sub">
+      Fermentamos en grupo reconociendo la sinergia como potencia.
+    </p>
+    <div class="hero-actions">
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn">Escríbenos por Instagram</a>
+      <a href={APP_URL} class="btn">App</a>
+      <a href="#que-somos" class="btn btn--outline">Conócenos</a>
     </div>
   </div>
-  <RootDivider class="divider" />
+
+  <div class="hero-burbujas" aria-hidden="true"></div>
 </section>
 
 <style>
+  /* Corridor posture: fills the viewport, one centred column */
   .hero {
-    padding-top: clamp(2.5rem, 6vw, 4.5rem);
-    padding-bottom: 0;
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4xl) var(--gutter);
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-xl);
+    text-align: center;
+    max-width: 44ch;
+    gap: var(--space-lg);
+  }
+
+  /* frasco: variante de marca para afiches — 100px alto */
+  .hero-frasco-wrap {
+    width: 69px;
+    height: 100px;
+    color: var(--color-ink);
+    flex-shrink: 0;
+  }
+
+  .hero-frasco-wrap :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   h1 {
-    margin: var(--space-2xs) 0 var(--space-md);
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    line-height: 0.95;
+    text-wrap: balance;
   }
 
   .hero-sub {
-    max-width: 42ch;
+    max-width: 36ch;
+    text-align: center;
   }
 
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
-  }
-
-  .hero-art {
-    display: flex;
     justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
   }
 
-  .hero-foto {
-    width: min(420px, 85vw);
-    height: min(315px, 63.75vw);
+  .hero-burbujas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
   }
 
-  @media (max-width: 800px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      text-align: left;
-    }
-
-    .hero-art {
-      order: -1;
-    }
+  @media (max-width: 40rem) {
+    .hero { min-height: 100svh; }
+    .hero-inner { max-width: 90vw; }
+    h1 { font-size: clamp(2.75rem, 12vw, 5rem); }
   }
 </style>
+
+<!-- keyframe global para que el JS lo encuentre por nombre -->
+<style is:global>
+  @keyframes hero-subir {
+    0%   { transform: translateY(0);      opacity: 0; }
+    8%   { opacity: 1;                              }
+    88%  { opacity: 1;                              }
+    100% { transform: translateY(-115vh); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-burbuja { animation: none !important; opacity: 0 !important; }
+  }
+</style>
+
+<script>
+  const container = document.querySelector<HTMLElement>('#top .hero-burbujas');
+  if (!container) throw new Error('no .hero-burbujas');
+
+  const ACCENT = getComputedStyle(document.documentElement)
+    .getPropertyValue('--color-accent').trim() || 'oklch(75% 0.189 85)';
+
+  for (let i = 0; i < 20; i++) {
+    const b = document.createElement('div');
+    b.className = 'hero-burbuja';
+
+    const size     = 5  + Math.floor(Math.random() * 26);  // 5–30px
+    const left     = 2  + Math.random() * 96;              // 2–98%
+    const duration = 5  + Math.random() * 10;              // 5–15s
+    const delay    = -(Math.random() * duration);           // arranca en fase
+    const opacity  = 0.15 + Math.random() * 0.35;           // 0.15–0.50
+
+    b.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: ${ACCENT};
+      width: ${size}px;
+      height: ${size}px;
+      left: ${left.toFixed(1)}%;
+      bottom: -${size}px;
+      opacity: ${opacity.toFixed(2)};
+      animation: hero-subir ${duration.toFixed(1)}s linear ${delay.toFixed(1)}s infinite;
+    `;
+
+    container.appendChild(b);
+  }
+</script>

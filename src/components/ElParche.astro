@@ -2,39 +2,38 @@
 const APP_URL = "https://app.lasociedaddelfermento.co";
 
 const detalles = [
-  { label: "Cuándo", valor: "Cada 15 días, los martes, 5:00 p.m." },
+  { label: "Cuándo", valor: "Un encuentro mensual, coordinado a través de la Colonia en la app." },
   {
     label: "Dónde",
     valor:
-      "Somos itinerantes: cada encuentro cae en un lugar distinto de Medellín. La dirección exacta aparece en la app cuando reservas tu cupo.",
+      "Somos itinerantes: cada encuentro llega a un lugar distinto de Medellín. La dirección exacta aparece en la app cuando reservas tu cupo.",
   },
   {
     label: "Cómo enterarte",
     valor:
-      "Las invitaciones circulan por WhatsApp. Escríbenos por Instagram y te sumamos al grupo.",
+      "Toda la información pasa por la app, en la sección La Colonia. Descárgala y reserva tu cupo.",
   },
 ];
 ---
 
+<!-- Rows composition: label-value pairs as horizontal rows -->
 <section id="parche" class="parche">
   <div class="wrap parche-grid">
-    <div>
-      <p class="eyebrow">Qué es</p>
+    <div class="parche-cabeza">
       <h2>El Parche<br />Fermentero</h2>
     </div>
     <div class="parche-body">
-      <p>
-        El Parche Fermentero es el encuentro quincenal de La Sociedad del
-        Fermento: un espacio abierto para compartir procesos de
-        fermentación, aprender unos de otros y probar lo que ha estado
-        burbujeando en casa. No hace falta ser experto — solo tener ganas de
-        fermentar algo (y de comerlo en buena compañía).
+      <p class="parche-intro">
+        El Parche Fermentero es el encuentro de La Sociedad del Fermento:
+        un espacio abierto para compartir procesos de fermentación, aprender
+        unos de otros y probar lo que ha estado burbujeando en casa.
+        No hace falta ser experto, solo tener ganas de fermentar algo.
       </p>
       <dl class="detalles">
         {
           detalles.map((d) => (
             <div class="detalle">
-              <dt class="meta">{d.label}</dt>
+              <dt>{d.label}</dt>
               <dd>{d.valor}</dd>
             </div>
           ))
@@ -47,43 +46,71 @@ const detalles = [
 
 <style>
   .parche {
-    background: var(--color-bg-alt);
+    background: var(--color-paper-2);
+  }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
 
   .parche-grid {
     display: grid;
     grid-template-columns: 0.9fr 1.4fr;
     gap: var(--space-2xl);
+    align-items: start;
   }
 
+  .parche-cabeza h2 {
+    margin: var(--space-xs) 0 0;
+  }
+
+  .parche-intro {
+    font-size: var(--text-lead);
+    max-width: 54ch;
+    margin-bottom: var(--space-xl);
+    line-height: 1.5;
+  }
+
+  /* Rows composition: each row is a horizontal pair */
   .detalles {
-    margin: var(--space-lg) 0;
+    margin: 0 0 var(--space-xl);
     display: grid;
-    gap: 1rem;
+    gap: 0;
   }
 
   .detalle {
     display: grid;
     grid-template-columns: 9rem 1fr;
-    gap: 1rem;
-    padding: var(--space-sm) 0;
-    border-top: 1px solid var(--color-line);
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-rule);
   }
 
+  .detalle:last-child {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  /* gate 54: sentence case dt */
   .detalle dt {
-    font-size: 0.75rem;
+    font-family: var(--font-outlier);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--lsdf-terracota);
   }
 
   .detalle dd {
     margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.5;
   }
 
   @media (max-width: 800px) {
     .parche-grid {
       grid-template-columns: 1fr;
-      gap: var(--space-md);
+      gap: var(--space-lg);
     }
-
     .detalle {
       grid-template-columns: 1fr;
       gap: var(--space-2xs);

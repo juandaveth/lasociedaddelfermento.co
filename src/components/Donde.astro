@@ -1,0 +1,193 @@
+---
+import RootDivider from "./illustrations/RootDivider.astro";
+
+const lugares = [
+  { nombre: "El Escampadero",         link: "https://www.instagram.com/elescampadero/" },
+  { nombre: "El Exploratorio",        link: "https://www.instagram.com/reels/Dc_aHwwOMVU/" },
+  { nombre: "Museo de Antioquia",     link: "https://www.instagram.com/p/DfAa21xGs_N" },
+  { nombre: "Madre Monte Cervecería", link: "https://www.instagram.com/cecisommelier/p/DfaLUUbJqtq/" },
+  { nombre: "Librería Musa",          link: "https://www.instagram.com/p/Dedd0rPxLgW/" },
+];
+---
+
+<section id="donde" class="donde" data-surface="ink">
+  <div class="wrap">
+    <p class="eyebrow">Dónde lo hacemos</p>
+    <h2>Somos itinerantes</h2>
+    <p class="lead">
+      Fermentamos en casas de la Colonia, espacios culturales y museos de
+      Medellín. Cada parche llega a un lugar distinto.
+    </p>
+
+    <ul class="burbujas" role="list">
+      {
+        lugares.map((l) => (
+          <li class="burbuja">
+            <a href={l.link} target="_blank" rel="noopener" class="burbuja-cara">
+              <span class="burbuja-nombre">{l.nombre}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="cta-lugar">
+      <p class="cta-pregunta">¿Tienes un espacio, un conocimiento o un proyecto?</p>
+      <p class="cta-invitacion"><em>Hagamos algo juntos: el próximo parche puede ser contigo.</em></p>
+      <a href="#fermentemos" class="btn">Proponer un encuentro</a>
+    </div>
+  </div>
+  <RootDivider class="divider" />
+</section>
+
+<style>
+  .wrap {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  h2 {
+    margin: var(--space-xs) 0 var(--space-md);
+  }
+
+  .lead {
+    max-width: 54ch;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .burbujas {
+    list-style: none;
+    margin: 0 0 var(--space-3xl);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .burbuja {
+    display: flex;
+  }
+
+  .burbuja-cara {
+    width: var(--tam);
+    height: var(--tam);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.4rem;
+  }
+
+  a.burbuja-cara {
+    text-decoration: none;
+    transition: transform 0.18s, filter 0.18s;
+  }
+
+  a.burbuja-cara:hover {
+    transform: scale(1.06);
+    filter: brightness(1.07);
+  }
+
+  .burbuja-nombre {
+    font-family: var(--font-display);
+    font-size: inherit;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  /* CTA box: crema card inside ink section */
+  .cta-lugar {
+    background: var(--lsdf-crema);
+    color: var(--lsdf-tinta);
+    border: 2px solid var(--lsdf-tinta);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-dura-sm);
+    padding: var(--space-xl);
+    max-width: var(--medida);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .cta-pregunta {
+    font-family: var(--font-outlier);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--lsdf-terracota);
+    margin: 0;
+  }
+
+  .cta-invitacion {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .cta-lugar .btn {
+    align-self: flex-start;
+    background: var(--lsdf-tinta);
+    color: var(--lsdf-crema);
+    border-color: var(--lsdf-tinta);
+    box-shadow: 6px 6px 0 0 var(--lsdf-mostaza);
+  }
+
+  .cta-lugar .btn:hover {
+    background: transparent;
+    color: var(--lsdf-tinta);
+    box-shadow: none;
+  }
+
+  @keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-9px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .burbuja-cara { animation: none !important; }
+  }
+
+  @media (max-width: 700px) {
+    .burbujas { gap: var(--space-sm); }
+    .burbuja { margin-top: 0 !important; }
+  }
+</style>
+
+<script>
+  const PALETA = [
+    "oklch(94% 0.027 93)",
+    "oklch(89% 0.045 88)",
+    "oklch(81% 0.13  84)",
+    "oklch(75% 0.189 85)",
+    "oklch(71% 0.14  62)",
+  ];
+  const TINTA = "oklch(14% 0.012 61)";
+
+  function shuffle<T>(arr: T[]): T[] {
+    return [...arr].sort(() => Math.random() - 0.5);
+  }
+
+  const caras = document.querySelectorAll<HTMLElement>('#donde .burbuja-cara');
+  const colores = shuffle(PALETA);
+  const isMobile = window.innerWidth <= 700;
+
+  caras.forEach((el, i) => {
+    const tam = isMobile ? 120 + Math.floor(Math.random() * 60) : 145 + Math.floor(Math.random() * 100);
+    const fs = Math.round(tam / 7);
+    el.style.width = tam + 'px';
+    el.style.height = tam + 'px';
+    el.style.background = colores[i % colores.length];
+    el.style.color = TINTA;
+    el.style.fontSize = fs + 'px';
+
+    const duration = (3.2 + Math.random() * 1.6).toFixed(2);
+    const delay    = (Math.random() * -4).toFixed(2);
+    el.style.animation = `flotar ${duration}s ease-in-out ${delay}s infinite`;
+
+    if (!isMobile) {
+      const li = el.closest<HTMLElement>('.burbuja');
+      if (li) li.style.marginTop = Math.floor(Math.random() * 52) + 'px';
+    }
+  });
+</script>

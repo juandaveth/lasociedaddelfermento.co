@@ -1,0 +1,170 @@
+---
+import Marca from "./illustrations/Marca.astro";
+
+const SINFONIA_URL = "https://www.instagram.com/reel/Dc_aHwwOMVU/";
+const APP_URL = "https://app.lasociedaddelfermento.co";
+const TALLERES_URL = "https://www.instagram.com/lasociedaddelfermento/reel/DeipKLIR6fs/";
+---
+
+<!-- Bento composition: mixed spans, 5 tiles — heading tile spans full width -->
+<section id="que-hacemos" class="que-hacemos">
+  <div class="wrap">
+    <p class="eyebrow">Qué hacemos</p>
+    <h2>Cinco frascos</h2>
+
+    <ul class="bento" role="list">
+      <li class="tile tile--parche">
+        <div class="tile-head">
+          <div class="tile-frasco-wrap"><Marca variante="frasco" aria-hidden="true" /></div>
+          <span class="tile-num" aria-hidden="true">01</span>
+        </div>
+        <h3>Parche fermentero</h3>
+        <p>Encuentro abierto e itinerante para fermentar juntos.</p>
+        <a href="#parche" class="tile-link">Ver cuándo y dónde</a>
+      </li>
+
+      <li class="tile tile--explorar">
+        <div class="tile-head">
+          <div class="tile-frasco-wrap"><Marca variante="frasco" aria-hidden="true" /></div>
+          <span class="tile-num" aria-hidden="true">02</span>
+        </div>
+        <h3>Exploraciones</h3>
+        <p>
+          Arte, investigación y experimentos comunitarios. Como
+          <em>Sinfonía de todos los tiempos</em>, residencia de Santiago
+          Franco Lopera en El Exploratorio.
+        </p>
+        <a href={SINFONIA_URL} target="_blank" rel="noopener" class="tile-link">Ver la residencia</a>
+      </li>
+
+      <li class="tile tile--colonia">
+        <div class="tile-head">
+          <div class="tile-frasco-wrap"><Marca variante="frasco" aria-hidden="true" /></div>
+          <span class="tile-num" aria-hidden="true">03</span>
+        </div>
+        <h3>Colonia</h3>
+        <p>Las personas en la app reservan cupo, reciben convocatorias y proponen.</p>
+        <a href={APP_URL} target="_blank" rel="noopener" class="tile-link">Únete a la Colonia</a>
+      </li>
+
+      <li class="tile tile--talleres">
+        <div class="tile-head">
+          <div class="tile-frasco-wrap"><Marca variante="frasco" aria-hidden="true" /></div>
+          <span class="tile-num" aria-hidden="true">04</span>
+        </div>
+        <h3>Talleres</h3>
+        <p>Sesiones pagas para aprender a fondo.</p>
+        <a href={TALLERES_URL} target="_blank" rel="noopener" class="tile-link">Ver taller en Instagram</a>
+      </li>
+
+      <li class="tile tile--brotes">
+        <div class="tile-head">
+          <div class="tile-frasco-wrap"><Marca variante="frasco" aria-hidden="true" /></div>
+          <span class="tile-num" aria-hidden="true">05</span>
+        </div>
+        <h3>Brotes fermenteros</h3>
+        <p>Producimos y vendemos nuestros fermentos.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .que-hacemos {
+    background: var(--color-paper-2);
+  }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  h2 {
+    margin: var(--space-xs) 0 var(--space-xl);
+  }
+
+  /* Bento: 3 columns, tile 01 spans 2 */
+  .bento {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .tile {
+    background: var(--color-paper);
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sheet);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .tile--parche  { grid-column: span 2; }
+
+  /* frasco + número alineados */
+  .tile-head {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+  }
+
+  .tile-frasco-wrap {
+    width: 28px;
+    height: 40px;
+    color: var(--color-ink);
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  .tile-frasco-wrap :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tile-num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--lsdf-terracota);
+  }
+
+  .tile h3 {
+    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+    margin: 0;
+  }
+
+  .tile p {
+    margin: 0;
+    flex: 1;
+    font-size: var(--text-md);
+  }
+
+  /* gate 54/67: sentence case, no tracking */
+  .tile-link {
+    display: inline-block;
+    margin-top: var(--space-xs);
+    font-family: var(--font-outlier);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--lsdf-terracota);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .tile--parche { grid-column: span 2; }
+  }
+
+  @media (max-width: 540px) {
+    .bento { grid-template-columns: 1fr; }
+    .tile--parche { grid-column: span 1; }
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import heroPhoto from "../assets/hero_comunidad.jpg";
+---
+
+<!-- Showcase composition: photo large left, text right; photo first on mobile -->
+<section id="quienes-somos" class="quienes-somos">
+  <div class="wrap showcase-grid">
+    <div class="foto-col">
+      <div class="photo-frame">
+        <Image
+          src={heroPhoto}
+          alt="El equipo de La Sociedad del Fermento con delantales LSDF en el Taller Ethel Gilmour"
+          widths={[400, 700, 1000]}
+          sizes="(max-width: 800px) 90vw, 540px"
+        />
+      </div>
+    </div>
+    <div class="texto-col">
+      <p class="eyebrow">Quiénes somos</p>
+      <h2>El equipo</h2>
+      <p class="bajada">
+        Personas del mundo del arte, las humanidades, la tecnología, la agricultura y la cocina,
+        unidas por lo que burbujea.
+      </p>
+      <p>
+        El equipo de LSDF no es un grupo de expertos en fermentación: es un
+        grupo de personas que decidió aprender juntas. Eso es exactamente lo
+        que somos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quienes-somos {
+    background: var(--color-paper);
+  }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  h2 {
+    margin: var(--space-xs) 0 var(--space-md);
+  }
+
+  .bajada {
+    font-size: var(--text-lead);
+    margin-bottom: var(--space-md);
+  }
+
+  .foto-col {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* photo-frame defined in global.css; override size here */
+  .photo-frame {
+    width: min(540px, 90%);
+    height: min(405px, 67.5vw);
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 800px) {
+    .showcase-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .foto-col {
+      order: -1;
+      justify-content: flex-start;
+    }
+    .photo-frame {
+      width: min(380px, 90vw);
+      height: min(285px, 67.5vw);
+    }
+  }
+</style>
