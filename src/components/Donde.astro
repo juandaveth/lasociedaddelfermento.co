@@ -25,6 +25,7 @@ const lugares = [
           <li class="burbuja">
             <a href={l.link} target="_blank" rel="noopener" class="burbuja-cara">
               <span class="burbuja-nombre">{l.nombre}</span>
+              <span class="burbuja-ig">ver en ig ↗</span>
             </a>
           </li>
         ))
@@ -75,6 +76,7 @@ const lugares = [
     height: var(--tam);
     border-radius: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -96,6 +98,16 @@ const lugares = [
     font-size: inherit;
     line-height: 1.2;
     font-weight: 400;
+  }
+
+  .burbuja-ig {
+    display: block;
+    font-family: var(--font-outlier);
+    font-size: 0.52em;
+    font-weight: 600;
+    opacity: 0.45;
+    margin-top: 0.4em;
+    letter-spacing: 0.03em;
   }
 
   /* CTA box: crema card inside ink section */
@@ -166,6 +178,13 @@ const lugares = [
 
   function shuffle<T>(arr: T[]): T[] {
     return [...arr].sort(() => Math.random() - 0.5);
+  }
+
+  // Shuffle order in the DOM
+  const lista = document.querySelector<HTMLElement>('#donde .burbujas');
+  if (lista) {
+    const items = [...lista.querySelectorAll<HTMLElement>('.burbuja')];
+    shuffle(items).forEach(li => lista.appendChild(li));
   }
 
   const caras = document.querySelectorAll<HTMLElement>('#donde .burbuja-cara');

@@ -28,31 +28,36 @@ const estrofas = [
     "Creemos en el bienestar como código abierto: ningún saber sobre el fermento se vende, se esconde ni se monopoliza.",
   ],
 ];
+
+const [apertura, ...cuerpo] = estrofas;
 ---
 
 <section id="manifiesto" class="manifiesto">
   <div class="wrap">
-    <header class="manifiesto-head">
-      <p class="eyebrow">Manifiesto fermentero</p>
-      <h2>El tiempo de<br />todos los tiempos</h2>
-    </header>
 
-    <div class="manifiesto-cuerpo">
-      {
-        estrofas.map((estrofa, idx) => (
-          <p class={idx === 0 ? "primera" : undefined}>
-            {estrofa.map((linea, i) => (
-              <>
-                {i > 0 && <br />}
-                {linea}
-              </>
-            ))}
+    <div class="manifiesto-carta">
+      <header class="manifiesto-head">
+        <p class="eyebrow">Manifiesto Fermentero</p>
+        <h2>El tiempo de<br />todos los tiempos</h2>
+      </header>
+      <div class="manifiesto-cuerpo">
+        <p class="apertura">
+          {apertura.map((linea, i) => (<>{i > 0 && <br />}{linea}</>))}
+        </p>
+
+        {cuerpo.map((estrofa) => (
+          <p>
+            {estrofa.map((linea, i) => (<>{i > 0 && <br />}{linea}</>))}
           </p>
-        ))
-      }
+        ))}
+      </div>
+
+      <footer class="manifiesto-firma">
+        <hr class="firma-linea" />
+        <p class="firma-nombre">La Sociedad del Fermento</p>
+      </footer>
     </div>
 
-    <p class="firma" aria-label="La Sociedad del Fermento">LSDF</p>
   </div>
 </section>
 
@@ -65,53 +70,74 @@ const estrofas = [
     max-width: var(--max-width);
     margin-inline: auto;
     padding-inline: var(--gutter);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
+  /* Encabezado de documento */
   .manifiesto-head {
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
   }
 
   .manifiesto-head h2 {
-    margin-top: var(--space-xs);
+    margin: 0;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
   }
 
+  /* Carta enmarcada */
+  .manifiesto-carta {
+    width: min(52ch, 100%);
+    background: var(--lsdf-crema);
+    color: var(--lsdf-tinta);
+    border: 2px solid var(--lsdf-tinta);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-dura-sm);
+    padding: var(--space-2xl);
+  }
+
+  /* Cuerpo */
   .manifiesto-cuerpo {
-    max-width: 54ch;
     display: grid;
     gap: var(--space-lg);
   }
 
   .manifiesto-cuerpo p {
     font-size: var(--text-lg);
-    line-height: 1.6;
+    line-height: 1.65;
     text-wrap: pretty;
     margin: 0;
   }
 
-  /* Primera declaración: sostiene todo el resto */
-  .manifiesto-cuerpo p.primera {
-    font-size: clamp(1.375rem, 2vw, 1.75rem);
+  /* Epígrafe de apertura */
+  .apertura {
+    font-size: clamp(1.25rem, 2vw, 1.6rem) !important;
     font-style: italic;
-    line-height: 1.35;
+    line-height: 1.4 !important;
+    text-align: center;
     color: var(--color-ink);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid oklch(14% 0.012 61 / 0.12);
   }
 
-  .firma {
+  /* Cierre formal */
+  .manifiesto-firma {
     margin-top: var(--space-2xl);
-    font-family: var(--font-display);
-    font-size: var(--text-title);
-    letter-spacing: 0.08em;
-    color: var(--color-ink);
   }
 
-  .firma::after {
-    content: "· · ·";
-    display: block;
-    margin-top: var(--space-2xs);
-    font-family: var(--font-outlier);
-    font-size: var(--text-xs);
-    letter-spacing: 0.25em;
-    color: var(--color-accent);
+  .firma-linea {
+    border: none;
+    border-top: 1px solid oklch(14% 0.012 61 / 0.2);
+    margin: 0 0 var(--space-md);
+  }
+
+  .firma-nombre {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--text-lg);
+    color: var(--color-ink);
+    margin: 0 0 var(--space-2xs);
   }
 
   @media (max-width: 800px) {
