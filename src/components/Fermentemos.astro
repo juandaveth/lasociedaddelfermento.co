@@ -1,5 +1,6 @@
 ---
 import QRCode from 'qrcode';
+import RootDivider from "./illustrations/RootDivider.astro";
 
 const FORM_URL = "https://forms.gle/3aH6nHbXmFVrwjJf7";
 const FORM_FULL_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeoYc6VNh2VIOTtM7YLPGXPJralFYhyG28ycmmjxdiOpESbNA/viewform";
@@ -15,6 +16,7 @@ const qrSvg = await QRCode.toString(FORM_FULL_URL, {
 
 <!-- Band composition: committed mostaza field, posture declared in tokens stamp -->
 <section id="fermentemos" class="fermentemos">
+  <RootDivider class="divider divider--encabeza" />
   <div class="wrap fermentemos-inner">
     <div class="fermentemos-texto">
       <p class="eyebrow">Fermentemos juntos</p>

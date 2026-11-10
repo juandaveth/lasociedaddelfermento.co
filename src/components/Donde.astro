@@ -1,6 +1,4 @@
 ---
-import RootDivider from "./illustrations/RootDivider.astro";
-
 const lugares = [
   { nombre: "El Escampadero",         link: "https://www.instagram.com/elescampadero/" },
   { nombre: "El Exploratorio",        link: "https://www.instagram.com/reels/Dc_aHwwOMVU/" },
@@ -38,7 +36,6 @@ const lugares = [
       <a href="#fermentemos" class="btn">Proponer un encuentro</a>
     </div>
   </div>
-  <RootDivider class="divider" />
 </section>
 
 <style>
@@ -128,7 +125,7 @@ const lugares = [
     font-family: var(--font-outlier);
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--lsdf-terracota);
+    color: var(--color-focus); /* terracota fija: la tarjeta es crema dentro de una sección oscura */
     margin: 0;
   }
 

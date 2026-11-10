@@ -214,3 +214,15 @@ p { margin: 0 0 1rem; }
   color: var(--color-ink);
   margin-top: var(--space-2xl);
 }
+
+/* Entre dos secciones de fondo alterno: sin franja de otro color */
+.divider--alterna {
+  margin-top: 0;
+  background: var(--color-bg-alt);
+}
+
+/* Encima del contenido de una sección, pegado a su título */
+.divider--encabeza {
+  margin-top: 0;
+  margin-bottom: var(--space-xl);
+}
