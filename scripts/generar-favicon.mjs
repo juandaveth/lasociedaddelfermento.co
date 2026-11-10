@@ -21,8 +21,8 @@ import { contenido } from "../src/lib/marca.mjs";
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const publico = join(raiz, "public");
 
-const MOSTAZA = "#e6ab1e";
-const TINTA = "#1a1610";
+const MOSTAZA = "#e4a100";
+const TINTA = "#0d0805";
 
 const svg = [
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill-rule="evenodd">',

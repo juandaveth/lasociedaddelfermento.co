@@ -23,15 +23,15 @@ const raiz = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const destino = join(raiz, "public", "marca");
 
 const TINTAS = {
-  negro: { hex: "#1a1610", sufijo: "negro" },
-  crema: { hex: "#f5eedc", sufijo: "crema" },
+  negro: { hex: "#0d0805", sufijo: "negro" },
+  crema: { hex: "#f1ebd7", sufijo: "crema" },
 };
 
 // Nombres de la paleta, para no tener que teclear el hex.
 const FONDOS = {
-  mostaza: "#e6ab1e",
-  crema: "#f5eedc",
-  tinta: "#1a1610",
+  mostaza: "#e4a100",
+  crema: "#f1ebd7",
+  tinta: "#0d0805",
 };
 
 // Tamaños útiles: avatar de Instagram, favicon grande, e impresión.

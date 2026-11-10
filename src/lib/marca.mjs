@@ -165,7 +165,7 @@ export function contenido(variante) {
  * rectángulo a sangre: es lo que necesita una foto de perfil de
  * Instagram, que no admite transparencia y recorta en círculo.
  */
-export function svgMarca(variante, { color = "#1a1610", ancho, fondo } = {}) {
+export function svgMarca(variante, { color = "#0d0805", ancho, fondo } = {}) {
   const vb = VIEW_BOX[variante];
   if (!vb) throw new Error(`Variante de marca desconocida: ${variante}`);
 
