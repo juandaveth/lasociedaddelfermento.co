@@ -182,7 +182,7 @@ p { margin: 0 0 1rem; }
   border-radius: var(--radius-card);
   border: var(--border-marco) solid var(--color-ink);
   box-shadow: var(--shadow-dura);
-  transform: rotate(1.5deg);
+  margin-inline: auto;          /* siempre derecho y centrado */
 }
 
 .photo-frame > img {
